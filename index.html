@@ -8,7 +8,7 @@
     <style>
         :root {
             --dark-green: #001a0f;
-            --royal-green: #1b5e20; /* اللون الأخضر الملكي */
+            --royal-green: #1b5e20; 
             --white: #ffffff;
             --bg-color: #f4f7f6;
             --highlight: #fff9c4;
@@ -20,6 +20,10 @@
         /* شاشة البداية */
         #introOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark-green); display: flex; justify-content: center; align-items: center; z-index: 10000; }
         .intro-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; text-align: center; width: 90%; max-width: 400px; border: 1px solid rgba(255,255,255,0.1); }
+        
+        /* تغيير لون النص في الصفحة الرئيسية للأبيض */
+        .intro-card h1 { color: var(--white); margin-bottom: 30px; font-weight: 700; }
+
         .mode-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border-radius: 50px; border: none; background: var(--white); color: var(--royal-green); font-weight: bold; cursor: pointer; }
         .resume-btn { background: #ffd700; color: #000; display: none; }
 
@@ -27,20 +31,19 @@
         .app-section { display: none; max-width: 800px; margin: 20px auto; padding: 15px; }
         .active-section { display: block; }
 
-        /* --- تعديل شكل القوائم (Select) لتطابق طلبك --- */
         select {
             width: 100%;
             padding: 15px;
             margin-bottom: 15px;
-            border-radius: 15px; /* حواف دائرية */
+            border-radius: 15px;
             border: none;
-            background-color: var(--royal-green); /* لون أخضر ملكي */
-            color: var(--white); /* كلام أبيض */
+            background-color: var(--royal-green);
+            color: var(--white);
             font-family: 'Tajawal', sans-serif;
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            appearance: none; /* إخفاء سهم المتصفح الافتراضي */
+            appearance: none;
             -webkit-appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
@@ -49,22 +52,16 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        select option {
-            background-color: var(--white);
-            color: var(--royal-green);
-        }
+        select option { background-color: var(--white); color: var(--royal-green); }
 
-        /* التصميم القرآني */
         .quran-text-container { font-family: 'Amiri Quran', serif; font-size: 28px; line-height: 2.2; background: #fffdf5; padding: 30px 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-top: 15px; }
         .ayah-span { cursor: pointer; padding: 2px 5px; border-radius: 5px; }
         .last-read { background: var(--highlight) !important; border: 1px dashed var(--royal-green); }
         .ayah-num { color: var(--royal-green); font-weight: bold; font-size: 20px; }
 
-        /* أزرار التنقل */
         .nav-buttons { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
         .page-btn { background: var(--royal-green); color: white; border: none; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: bold; }
 
-        /* الاستماع */
         .listen-card { background: var(--white); padding: 30px 20px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; }
         audio { width: 100%; border-radius: 50px; outline: none; }
     </style>
@@ -82,11 +79,10 @@
 </div>
 
 <header id="mainHeader">
-    <h3 id="headerTitle" style="color:var(--royal-green); margin:0;">المصحف الشريف</h3>
+    <h3 id="headerTitle" style="color:var(--royal-green); margin:0;">القرآن الكريم</h3>
     <button style="background:var(--royal-green); color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;" onclick="location.reload()">الرئيسية</button>
 </header>
 
-<!-- قسم الختمة -->
 <div id="khatmaMode" class="app-section">
     <select id="khatmaSurahSelect"></select>
     <div class="nav-buttons">
@@ -97,7 +93,6 @@
     <div id="khatmaText" class="quran-text-container"></div>
 </div>
 
-<!-- قسم الاستماع -->
 <div id="listenMode" class="app-section">
     <div class="listen-card">
         <select id="listenSurahSelect"></select>
@@ -111,13 +106,12 @@
         <div id="listenStatus" style="margin-bottom:15px; font-weight:bold; color:var(--royal-green);">اختر سورة وقارئ للبدء</div>
         <audio id="audioPlayer" controls></audio>
     </div>
-    <div id="listenText" class="quran-text-container" style="background: var(--white);">يرجى اختيار سورة لعرض النص</div>
+    <div id="listenText" class="quran-text-container" style="background: var(--white);"></div>
 </div>
 
-<!-- قسم التصفح -->
 <div id="browseMode" class="app-section">
     <select id="browseSurahSelect"></select>
-    <div id="browseText" class="quran-text-container" style="background: var(--white);">يرجى اختيار السورة لعرضها</div>
+    <div id="browseText" class="quran-text-container" style="background: var(--white);"></div>
 </div>
 
 <script>
