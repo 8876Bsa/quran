@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة رتّيل الشاملة | المساعد الذكي</title>
+    <title>منصة رتّيل الشاملة | التحديث الاحترافي</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -66,19 +66,14 @@
             padding: 35px;
             height: 100vh;
             overflow-y: auto;
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 30px;
         }
-
-        .left-panel { min-width: 0; }
 
         .section { display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         h1 { color: var(--text-main); font-weight: 800; margin-bottom: 25px; font-size: 2rem; }
-        .subtitle { color: var(--accent); font-size: 13px; font-weight: bold; letter-spacing: 1px; margin-bottom: 6px; display: block; text-transform: uppercase; }
+        .subtitle { color: var(--accent); font-size: 13px; font-weight: bold; letter-spacing: 1px; margin-bottom: 6px; display: block; }
 
         /* Glass Cards */
         .glass-card {
@@ -91,21 +86,27 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        /* Right Panel Widgets */
-        .right-panel {
+        /* Dashboard Grid Setup for Widgets */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 25px;
+        }
+
+        .dashboard-widgets {
             display: flex;
             flex-direction: column;
-            gap: 25px;
-            height: fit-content;
+            gap: 20px;
         }
-        .widget-title { font-size: 16px; color: var(--gold); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+
+        .widget-title { font-size: 15px; color: var(--gold); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-weight: 700; }
         .widget-text { font-size: 14px; line-height: 1.7; color: var(--text-main); }
 
         /* Prayer Times Dashboard */
         .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
         .prayer-card { text-align: center; padding: 15px 10px; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--border-glass); }
         .prayer-name { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
-        .prayer-time { font-size: 18px; font-weight: bold; color: var(--gold); }
+        .prayer-time { font-size: 17px; font-weight: bold; color: var(--gold); }
 
         /* Quran Styles */
         .surah-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; max-height: 500px; overflow-y: auto; padding-left: 5px; }
@@ -120,12 +121,26 @@
         #quranReader { display: none; }
         .basmala-header { font-family: 'Amiri Quran', serif; font-size: 32px; text-align: center; color: var(--accent); margin-bottom: 25px; user-select: none; }
         .quran-text {
-            font-family: 'Amiri Quran', serif; font-size: 28px; line-height: 2.3;
+            font-family: 'Amiri Quran', serif; font-size: 26px; line-height: 2.4;
             text-align: justify; text-align-last: center; color: #f1f5f9; background: #030712;
             padding: 40px; border-radius: 24px; border: 1px solid var(--border-glass);
-            max-height: 550px; overflow-y: auto;
+            max-height: 500px; overflow-y: auto; margin-bottom: 20px;
         }
-        .ayah-num { color: var(--gold); font-size: 22px; margin: 0 4px; font-family: 'Tajawal'; font-weight: bold; }
+        .ayah-span { cursor: pointer; padding: 2px 4px; border-radius: 6px; }
+        .ayah-span:hover { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
+        .ayah-span.active-highlight { background: rgba(251, 191, 36, 0.2); color: var(--gold); }
+        .ayah-num { color: var(--gold); font-size: 20px; margin: 0 4px; font-family: 'Tajawal'; font-weight: bold; display: inline-block; }
+
+        /* Tafsir Box Panel */
+        .tafsir-panel { background: rgba(3, 7, 18, 0.6); border: 1px dashed var(--accent); border-radius: 16px; padding: 15px 20px; margin-top: 15px; }
+
+        /* Audio Control Bar */
+        .audio-bar { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 16px; margin-bottom: 20px; border: 1px solid var(--border-glass); }
+        .audio-bar select { background: #0f172a; color: white; border: 1px solid var(--border-glass); padding: 8px 12px; border-radius: 8px; font-family: Tajawal; outline: none; }
+        audio { flex: 1; min-width: 250px; height: 35px; }
+
+        /* Reader Navigation Buttons */
+        .reader-nav { display: flex; justify-content: space-between; margin-top: 20px; gap: 15px; }
 
         /* Tasbeeh Smart Counter */
         .tasbeeh-container { text-align: center; padding: 30px 0; }
@@ -146,13 +161,17 @@
         }
 
         /* AI Chat Assistant Layout */
-        .chat-container { display: flex; flex-direction: column; height: 450px; }
+        .chat-container { display: flex; flex-direction: column; height: 500px; }
         .chat-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; background: rgba(0,0,0,0.2); border-radius: 16px; }
-        .msg { max-width: 80%; padding: 12px 18px; border-radius: 16px; line-height: 1.6; font-size: 15px; }
+        .msg { max-width: 85%; padding: 12px 18px; border-radius: 16px; line-height: 1.6; font-size: 15px; }
         .msg.bot { background: rgba(255,255,255,0.05); align-self: flex-start; color: var(--text-main); border-bottom-right-radius: 4px; }
         .msg.user { background: var(--accent); align-self: flex-end; color: white; border-bottom-left-radius: 4px; }
         .chat-input-area { display: flex; gap: 10px; }
         .chat-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 12px; padding: 14px; color: white; outline: none; font-family: Tajawal; }
+
+        /* Embed Bot Buttons */
+        .bot-card-btn { background: var(--gold); color: #0b0f19; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; }
+        .bot-card-btn:hover { background: #e0a716; }
 
         /* Global Elements */
         .btn-primary { background: var(--accent); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
@@ -164,8 +183,8 @@
             .sidebar { width: 100%; height: 70px; flex-direction: row; justify-content: space-around; bottom: 0; top: auto; padding: 0; }
             .logo { display: none; }
             .nav-item { margin: 0; }
-            .main-content { margin-right: 0; margin-bottom: 70px; padding: 20px; grid-template-columns: 1fr; }
-            .right-panel { order: -1; }
+            .main-content { margin-right: 0; margin-bottom: 70px; padding: 20px; }
+            .dashboard-layout { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -173,7 +192,7 @@
 
     <nav class="sidebar">
         <a href="#" class="logo">رِ</a>
-        <div class="nav-item active" onclick="switchTab('dashboard')" title="الرئيسية"><i class="fas fa-grid-2"></i><i class="fas fa-home"></i></div>
+        <div class="nav-item active" onclick="switchTab('dashboard')" title="الرئيسية"><i class="fas fa-home"></i></div>
         <div class="nav-item" onclick="switchTab('quran')" title="القرآن الكريم"><i class="fas fa-book-open"></i></div>
         <div class="nav-item" onclick="switchTab('tasbeeh')" title="السبحة والعدادات"><i class="fas fa-fingerprint"></i></div>
         <div class="nav-item" onclick="switchTab('ai-assistant')" title="المساعد رتيل الذكي"><i class="fas fa-robot"></i></div>
@@ -181,135 +200,208 @@
 
     <main class="main-content">
         
-        <div class="left-panel">
+        <section id="dashboard" class="section active">
+            <span class="subtitle">نظام رتيل الموحد</span>
+            <h1>الرئيسية</h1>
             
-            <section id="dashboard" class="section active">
-                <span class="subtitle">نظام رتيل الموحد</span>
-                <h1>الرئيسية</h1>
-                
-                <div class="glass-card">
-                    <h3 style="margin-bottom: 20px; color: var(--gold); font-size: 16px;"><i class="fas fa-clock"></i> أوقات الصلاة <span id="prayerCityName">(جاري تحديد موقعك تلقائياً...)</span></h3>
-                    <div id="prayerTimesGrid" class="grid-5">
-                        <div class="prayer-card"><div class="prayer-name">الفجر</div><div class="prayer-time" id="pt-Fajr">--:--</div></div>
-                        <div class="prayer-card"><div class="prayer-name">الظهر</div><div class="prayer-time" id="pt-Dhuhr">--:--</div></div>
-                        <div class="prayer-card"><div class="prayer-name">العصر</div><div class="prayer-time" id="pt-Asr">--:--</div></div>
-                        <div class="prayer-card"><div class="prayer-name">المغرب</div><div class="prayer-time" id="pt-Maghrib">--:--</div></div>
-                        <div class="prayer-card"><div class="prayer-name">العشاء</div><div class="prayer-time" id="pt-Isha">--:--</div></div>
-                    </div>
-                </div>
-
-                <div class="glass-card">
-                    <h3 style="margin-bottom: 15px; color: var(--accent);"><i class="fas fa-sparkles"></i> حصن نفسك اليوم</h3>
-                    <div style="display: flex; flex-direction: column; gap: 12px;" id="dashboardAdhkar">
+            <div class="dashboard-layout">
+                <div class="dashboard-main-panel">
+                    
+                    <div class="glass-card" id="continueReadingCard" style="display: none; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(20, 30, 53, 0.65)); border-color: var(--accent);">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
+                            <div>
+                                <span class="subtitle" style="color:var(--gold); margin-bottom:2px;">📝 تابع من حيث وقفت</span>
+                                <h4 style="font-size:18px; font-weight:700;" id="continueSurahLabel">سورة البقرة</h4>
+                            </div>
+                            <button class="btn-primary" onclick="resumeLastReadSurah()"><i class="fas fa-play"></i> استكمال القراءة الآن</button>
                         </div>
-                </div>
-            </section>
-
-            <section id="quran" class="section">
-                <span class="subtitle">المصحف الشريف بالرسم العثماني</span>
-                <h1>القرآن الكريم</h1>
-                
-                <div id="quranIndex">
-                    <div class="voice-search-bar">
-                        <input type="text" id="surahSearch" class="chat-input" placeholder="ابحث عن سورة بالاسم...">
-                        <button class="btn-primary" onclick="startVoiceSearch()"><i class="fas fa-microphone"></i> بحث صوتي</button>
                     </div>
-                    <div id="surahsGrid" class="surah-grid"></div>
+
+                    <div class="glass-card">
+                        <h3 style="margin-bottom: 20px; color: var(--gold); font-size: 16px;"><i class="fas fa-clock"></i> أوقات الصلاة <span id="prayerCityName">(جاري تحديد موقعك تلقائياً...)</span></h3>
+                        <div id="prayerTimesGrid" class="grid-5">
+                            <div class="prayer-card"><div class="prayer-name">الفجر</div><div class="prayer-time" id="pt-Fajr">--:--</div></div>
+                            <div class="prayer-card"><div class="prayer-name">الظهر</div><div class="prayer-time" id="pt-Dhuhr">--:--</div></div>
+                            <div class="prayer-card"><div class="prayer-name">العصر</div><div class="prayer-time" id="pt-Asr">--:--</div></div>
+                            <div class="prayer-card"><div class="prayer-name">المغرب</div><div class="prayer-time" id="pt-Maghrib">--:--</div></div>
+                            <div class="prayer-card"><div class="prayer-name">العشاء</div><div class="prayer-time" id="pt-Isha">--:--</div></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <h3 style="margin-bottom: 15px; color: var(--accent);"><i class="fas fa-sparkles"></i> حصن نفسك اليوم</h3>
+                        <div style="display: flex; flex-direction: column; gap: 12px;" id="dashboardAdhkar"></div>
+                    </div>
                 </div>
 
-                <div id="quranReader">
-                    <button class="btn-primary" onclick="closeSurah()" style="margin-bottom: 20px; background: rgba(255,255,255,0.05); color: white;"><i class="fas fa-arrow-right"></i> الفهرس</button>
-                    <h2 id="currentSurahName" style="text-align: center; color: var(--gold); margin-bottom: 10px;"></h2>
-                    <div id="surahBasmalaSlot" class="basmala-header"></div>
-                    <div id="currentSurahText" class="quran-text"></div>
+                <div class="dashboard-widgets">
+                    <div class="glass-card">
+                        <div class="widget-title"><i class="fas fa-book" style="color: var(--accent);"></i> <span>حديث شريف</span></div>
+                        <p class="widget-text" id="sunnahHadithBox">جاري جلب الحديث...</p>
+                    </div>
+                    <div class="glass-card">
+                        <div class="widget-title"><i class="fas fa-heart" style="color: var(--gold);"></i> <span>سنة مهجورة</span></div>
+                        <p class="widget-text" id="abandonedSunnahBox">جاري جلب السنة اليومية...</p>
+                    </div>
+                    <div class="glass-card">
+                        <div class="widget-title"><i class="fas fa-shield-halved" style="color: #3b82f6;"></i> <span>إضاءة إيمانية</span></div>
+                        <p class="widget-text" id="spiritualLightBox">جاري جلب الإضاءة...</p>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section id="tasbeeh" class="section">
-                <span class="subtitle">الذكر المضاعف</span>
-                <h1>السبحة الإلكترونية المطورة</h1>
-                <div class="glass-card tasbeeh-container">
-                    <div style="margin-bottom: 15px;">
-                        <label style="display:block; margin-bottom:8px; font-size:14px; color:var(--text-muted);">اختر نوع الذكر المتكرر:</label>
-                        <select id="tasbeehWordSelect" class="select-input" onchange="onTasbeehSelectChange()">
-                            <option value="auto">🔄 النمط التلقائي الذكي (تغير كل 33)</option>
-                            <option value="0">سُبْحَانَ اللَّهِ</option>
-                            <option value="1">الْحَمْدُ لِلَّهِ</option>
-                            <option value="2">لَا إِلَهَ إِلَّا اللَّهُ</option>
-                            <option value="3">اللَّهُ أَكْبَرُ</option>
-                            <option value="4">أَسْتَغْفِرُ اللَّهَ العَظِيمَ</option>
+        <section id="quran" class="section">
+            <span class="subtitle">المصحف الشريف بالرسم العثماني</span>
+            <h1>القرآن الكريم</h1>
+            
+            <div id="quranIndex">
+                <div class="voice-search-bar">
+                    <input type="text" id="surahSearch" class="chat-input" placeholder="ابحث عن سورة بالاسم...">
+                    <button class="btn-primary" onclick="startVoiceSearch()"><i class="fas fa-microphone"></i> بحث صوتي</button>
+                </div>
+                <div id="surahsGrid" class="surah-grid"></div>
+            </div>
+
+            <div id="quranReader">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                    <button class="btn-primary" onclick="closeSurah()" style="background: rgba(255,255,255,0.05); color: white;"><i class="fas fa-arrow-right"></i> الفهرس</button>
+                    <h2 id="currentSurahName" style="color: var(--gold);"></h2>
+                    <div style="font-size:13px; color:var(--accent); font-weight:bold;"><i class="fas fa-circle-info"></i> اضغط على أي آية لقراءة تفسيرها فوراً</div>
+                </div>
+
+                <div class="audio-bar">
+                    <div>
+                        <i class="fas fa-volume-high" style="color:var(--accent); margin-left:5px;"></i>
+                        <select id="reciterSelect" onchange="changeReciterAudio()">
+                            <option value="https://server10.mp3quran.net/jleel/">الشيخ خالد الجليل</option>
+                            <option value="https://server8.mp3quran.net/afs/">الشيخ مشاري العفاسي</option>
+                            <option value="https://server12.mp3quran.net/maher/">الشيخ ماهر المعيقلي</option>
+                            <option value="https://server7.mp3quran.net/basit/">الشيخ عبد الباسط (مرتل)</option>
                         </select>
                     </div>
-                    <div id="tasbeehDisplayWord" style="font-size: 26px; margin-bottom: 25px; color: var(--gold); font-weight: bold; min-height: 38px;">سُبْحَانَ اللَّهِ</div>
-                    <div class="tasbeeh-btn" id="tasbeehCounterBtn" onclick="incrementTasbeehCore()">0</div>
-                    <button class="btn-primary" onclick="resetTasbeehCore()" style="background: #ef4444;"><i class="fas fa-rotate-left"></i> إعادة تصفير العداد</button>
-                </div>
-            </section>
-
-            <section id="ai-assistant" class="section">
-                <span class="subtitle">نظام الإرشاد المحلي المباشر</span>
-                <h1>مساعد رتيل الذكي</h1>
-                <div class="glass-card chat-container">
-                    <div class="chat-messages" id="chatMessages">
-                        <div class="msg bot">مرحباً بك! أنا مساعدك التوجيهي الذكي في منصة رتيل. اكتب لي أي شيء تريده وسأقوم بخدمتك، مثل: "وين القرآن؟"، "افتح سورة الكهف"، أو "أبي أسبح".</div>
+                    <div>
+                        <i class="fas fa-arrows-spin" style="color:var(--gold); margin-left:5px;"></i>
+                        <select id="audioRepeatSelect">
+                            <option value="1">تشغيل مرة واحدة</option>
+                            <option value="2">تكرار مرتين</option>
+                            <option value="3">تكرار 3 مرات</option>
+                            <option value="inf">تكرار مستمر 🔄</option>
+                        </select>
                     </div>
-                    <div class="chat-input-area">
-                        <input type="text" id="chatInputField" class="chat-input" placeholder="اكتب سؤالك أو أمر التوجيه هنا..." onkeypress="handleChatKey(event)">
-                        <button class="btn-primary" onclick="processAiCommand()"><i class="fas fa-paper-plane"></i> إرسال</button>
-                    </div>
+                    <audio id="quranAudioPlayer" controls></audio>
                 </div>
-            </section>
+                
+                <div id="surahBasmalaSlot" class="basmala-header"></div>
+                
+                <div id="currentSurahText" class="quran-text"></div>
 
-        </div>
+                <div class="tafsir-panel">
+                    <div style="font-size:14px; color:var(--gold); font-weight:bold; margin-bottom:6px;"><i class="fas fa-book-open"></i> التفسير الميسر:</div>
+                    <p id="tafsirContentBox" style="font-size:15px; line-height:1.6; color:var(--text-main);">اضغط على أي آية بالأعلى ليظهر تفسيرها هنا مباشرة...</p>
+                </div>
 
-        <div class="right-panel">
-            <div class="glass-card">
-                <div class="widget-title"><i class="fas fa-book" style="color: var(--accent);"></i> <span>إضاءة من السنة النبوية</span></div>
-                <p class="widget-text" id="sunnahHadithBox">«خيركم من تعلم القرآن وعلمه» (رواه البخاري).</p>
+                <div class="reader-nav">
+                    <button id="prevSurahBtn" class="btn-primary" style="background:rgba(255,255,255,0.03); border:1px solid var(--border-glass);" onclick="navigateSurah(-1)"><i class="fas fa-chevron-right"></i> السورة السابقة</button>
+                    <button id="nextSurahBtn" class="btn-primary" style="background:rgba(255,255,255,0.03); border:1px solid var(--border-glass);" onclick="navigateSurah(1)">السورة التالية <i class="fas fa-chevron-left"></i></button>
+                </div>
             </div>
-            <div class="glass-card">
-                <div class="widget-title"><i class="fas fa-heart" style="color: var(--gold);"></i> <span>سنة مهجورة اليوم</span></div>
-                <p class="widget-text" id="abandonedSunnahBox">التكبير عند الصعود والتسبيح عند النزول أثناء السير أو صعود الدرج.</p>
+        </section>
+
+        <section id="tasbeeh" class="section">
+            <span class="subtitle">الذكر المضاعف</span>
+            <h1>السبحة الإلكترونية المطورة</h1>
+            <div class="glass-card tasbeeh-container">
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom:8px; font-size:14px; color:var(--text-muted);">اختر نوع الذكر المتكرر:</label>
+                    <select id="tasbeehWordSelect" class="select-input" onchange="onTasbeehSelectChange()">
+                        <option value="auto">🔄 النمط التلقائي الذكي (تغير كل 33)</option>
+                        <option value="0">سُبْحَانَ اللَّهِ</option>
+                        <option value="1">الْحَمْدُ لِلَّهِ</option>
+                        <option value="2">لَا إِلَهَ إِلَّا اللَّهُ</option>
+                        <option value="3">اللَّهُ أَكْبَرُ</option>
+                        <option value="4">أَسْتَغْفِرُ اللَّهَ العَظِيمَ</option>
+                    </select>
+                </div>
+                <div id="tasbeehDisplayWord" style="font-size: 26px; margin-bottom: 25px; color: var(--gold); font-weight: bold; min-height: 38px;">سُبْحَانَ اللَّهِ</div>
+                <div class="tasbeeh-btn" id="tasbeehCounterBtn" onclick="incrementTasbeehCore()">0</div>
+                <button class="btn-primary" onclick="resetTasbeehCore()" style="background: #ef4444;"><i class="fas fa-rotate-left"></i> إعادة تصفير العداد</button>
             </div>
-            <div class="glass-card">
-                <div class="widget-title"><i class="fas fa-shield-halved" style="color: #3b82f6;"></i> <span>فائدة إيمانية</span></div>
-                <p class="widget-text">تدبر آية واحدة بتأمل وفهم خير للقلب من قراءة ختمة كاملة بلا وعي أو تركيز.</p>
+        </section>
+
+        <section id="ai-assistant" class="section">
+            <span class="subtitle">نظام الإرشاد والتوجيه الذكي والتفاعلي</span>
+            <h1>مساعد رتيل الذكي</h1>
+            <div class="glass-card chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="msg bot">مرحباً بك يا غالي! أنا مساعدك التفاعلي الذكي. اكتب لي ما تريد وسأفهمك فوراً وأعطيك أزرار تحكم سريعة داخل الشات، مثل: "وين القرآن"، "شغل سورة الكهف"، "أوقات الصلاة"، أو "أبي أسبح".</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInputField" class="chat-input" placeholder="اكتب سؤالك أو أمر التوجيه هنا..." onkeypress="handleChatKey(event)">
+                    <button class="btn-primary" onclick="processAiCommand()"><i class="fas fa-paper-plane"></i> إرسال</button>
+                </div>
             </div>
-        </div>
+        </section>
 
     </main>
 
     <script>
-        // المتغيرات العامة الأساسية لقاعدة البيانات المحلية
+        // المتغيرات والمصفوفات العامة
         let allSurahs = [];
+        let currentLoadedSurahNum = 0;
+        let currentLoadedSurahName = "";
         let globalTasbeehCount = 0;
-        const tasbeehArr = ["سُبْحَانَ اللَّهِ", "الْحَمْدُ لِلَّهِ", "لَا إِلَهَ إِلَّا اللَّهُ", "اللَّهُ أَكْبَرُ", "أَسْتَغْفِرُ اللَّهَ العَظِيمَ"];
+        let currentSurahTafsirArray = [];
+        let totalPlayCounter = 1;
         
+        const tasbeehArr = ["سُبْحَانَ اللَّهِ", "الْحَمْدُ لِلَّهِ", "لَا إِلَهَ إِلَّا اللَّهُ", "اللَّهُ أَكْبَرُ", "أَسْتَغْفِرُ اللَّهَ العَظِيمَ"];
+
+        // مصفوفات البيانات الخاصة بالريفريش العشوائي لصفحة الرئيسية
+        const staticHadiths = [
+            "قال رسول الله ﷺ: «من سلك طريقاً يلتمس فيه علماً، سهل الله له به طريقاً إلى الجنة» (رواه مسلم).",
+            "قال رسول الله ﷺ: «كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن: سبحان الله وبحمده، سبحان الله العظيم» (متفق عليه).",
+            "قال رسول الله ﷺ: «خيركم من تعلم القرآن وعلمه» (رواه البخاري).",
+            "قال رسول الله ﷺ: «من قرأ حرفًا من كتاب الله فله به حسنة، والحسنة بعشر أمثالها» (رواه الترمذي).",
+            "قال رسول الله ﷺ: «احفظ الله يحفظك، احفظ الله تجده تجاهك» (رواه الترمذي)."
+        ];
+
+        const staticSunnahs = [
+            "التكبير عند صعود المرتفعات والدرج، والتسبيح عند النزول والانحدار.",
+            "قراءة سورة الملك قبل النوم فإنها المنجية من عذاب القبر.",
+            "الوضوء قبل الذهاب إلى الفراش ونفض الفراش ثلاثاً.",
+            "السواك وتطهير الفم عند دخول المنزل وعند القيام للصلاة.",
+            "ابتداء لبس الحذاء بالرجل اليمنى، وخلعه بالرجل اليسرى."
+        ];
+
+        const staticLights = [
+            "تدبر آية واحدة من كتاب الله بتأمل وفهم، خير للقلب وأنفع له من قراءة ختمة كاملة بلا وعي.",
+            "إذا أردت أن يكلمك الله فاقرأ القرآن، وإذا أردت أن تكلم الله فقم إلى الصلاة.",
+            "عش حياتك متوكلاً، واذكر ربك في الرخاء والشدة، تجد أبواب التيسير تفتح أمامك تباعاً.",
+            "الاستغفار يفتح الأقفال، ويشرح البال، ويكثر الأموال، ويصلح الحال.",
+            "كلما زاد اتصالك بالقرآن تدبراً وسماعاً، كلما انزاح عن صدرك ثقل الهموم والأحزان."
+        ];
+
         // تبديل الأقسام والتابات الرئيسية
         function switchTab(tabId) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(nav => nav.removeAttribute('class'), nav => nav.className = 'nav-item');
+            document.querySelectorAll('.nav-item').forEach(nav => nav.className = 'nav-item');
             
             document.getElementById(tabId).classList.add('active');
             
-            // إضاءة التاب المحدد متوافق مع الموبايل والـ PC
             const icons = { 'dashboard':0, 'quran':1, 'tasbeeh':2, 'ai-assistant':3 };
             document.querySelectorAll('.nav-item')[icons[tabId]].className = 'nav-item active';
         }
 
-        // ================= 1. أوقات الصلاة الذكية والتعرف الجغرافي =================
+        // ================= 1. أوقات الصلاة والتعرف الجغرافي تلقائياً =================
         async function detectUserLocationAndPrayers() {
             try {
                 const ipRes = await fetch('https://ipapi.co/json/');
                 const ipData = await ipRes.json();
-                
                 const currentCity = ipData.city || 'Tanomah';
                 const currentCountry = ipData.country_name || 'Saudi Arabia';
-
                 document.getElementById('prayerCityName').innerText = `(${currentCity})`;
                 executePrayerFetch(currentCity, currentCountry);
             } catch (error) {
-                console.log("استخدام الإعداد الافتراضي الآمن (تنومة) نتيجة القيود الجغرافية للشبكة");
                 document.getElementById('prayerCityName').innerText = `(تنومة)`;
                 executePrayerFetch('Tanomah', 'Saudi Arabia');
             }
@@ -320,7 +412,6 @@
                 const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}&method=4`);
                 const data = await res.json();
                 const t = data.data.timings;
-                
                 document.getElementById('pt-Fajr').innerText = convertTo12Hour(t.Fajr);
                 document.getElementById('pt-Dhuhr').innerText = convertTo12Hour(t.Dhuhr);
                 document.getElementById('pt-Asr').innerText = convertTo12Hour(t.Asr);
@@ -336,15 +427,16 @@
             return `${h}:${m} ${period}`;
         }
 
-        // ================= 2. معالجة وتطهير نصوص السور وحل تكرار البسملة =================
+        // ================= 2. الفهرس والقارئ والبسملة والتفسير الميسر =================
         async function initQuranDatabase() {
             try {
                 const res = await fetch('https://api.alquran.cloud/v1/surah');
                 const data = await res.json();
                 allSurahs = data.data;
                 populateSurahCards(allSurahs);
+                checkLastSavedBookmark();
             } catch (e) {
-                document.getElementById('surahsGrid').innerHTML = '<p style="color:red; padding:20px;">خطأ في الاتصال بالخادم، يرجى التحديث.</p>';
+                document.getElementById('surahsGrid').innerHTML = '<p style="color:red; padding:20px;">خطأ في تحميل الفهرس.</p>';
             }
         }
 
@@ -367,34 +459,45 @@
             populateSurahCards(filtered);
         });
 
-        // دالة مبتكرة لتنظيف الكلمات ومقارنتها صوتياً وحرفياً بدقة 100%
-        function ultraCleanArabicText(txt) {
-            if (!txt) return "";
-            return txt
-                .replace(/[\u064B-\u065F]/g, "") // إزالة الحركات والتسوير التام
-                .replace(/[أإآا]/g, "ا")
-                .replace(/[ءئؤ]/g, "ا")
-                .replace(/ة/g, "ه")
-                .replace(/\s+/g, "") // دمج المسافات لضمان الفحص العشوائي المتطابق
-                .replace("سوره", "")
-                .replace("ال", "");
-        }
-
         async function renderSurahReader(num, name) {
+            currentLoadedSurahNum = num;
+            currentLoadedSurahName = name;
+            
+            // حفظ التقدم الحالي في المتصفح المحلي
+            localStorage.setItem('lastReadSurahNum', num);
+            localStorage.setItem('lastReadSurahName', name);
+            checkLastSavedBookmark();
+
             document.getElementById('quranIndex').style.display = 'none';
             document.getElementById('quranReader').style.display = 'block';
             document.getElementById('currentSurahName').innerText = `سورة ${name}`;
             
-            const bSlot = document.getElementById('surahStartPages');
             const txtContainer = document.getElementById('currentSurahText');
-            txtContainer.innerHTML = 'جاري إعداد الآيات بالرسم العثماني المصحح...';
+            const tafsirDisplay = document.getElementById('tafsirContentBox');
+            txtContainer.innerHTML = 'جاري تحميل الآيات العثمانية والتفسير الميسر...';
+            tafsirDisplay.innerText = "اضغط على أي آية بالأعلى ليظهر تفسيرها هنا مباشرة...";
+
+            // تحديث حالة أزرار التالي والسابق لمنع الخطأ البرمجي
+            document.getElementById('prevSurahBtn').style.opacity = (num === 1) ? "0.3" : "1";
+            document.getElementById('nextSurahBtn').style.opacity = (num === 114) ? "0.3" : "1";
+
+            // تحميل مشغل الصوت تلقائياً للسورة الحالية
+            changeReciterAudio();
 
             try {
-                const res = await fetch(`https://api.alquran.cloud/v1/surah/${num}/quran-uthmani`);
-                const data = await res.json();
+                // جلب نص القرآن الكريم العثماني والتفسير الميسر بالتوازي لتوفير الوقت وسرعة الأداء
+                const [quranRes, tafsirRes] = await Promise.all([
+                    fetch(`https://api.alquran.cloud/v1/surah/${num}/quran-uthmani`),
+                    fetch(`https://api.alquran.cloud/v1/surah/${num}/ar.muyassar`)
+                ]);
+                
+                const quranData = await quranRes.json();
+                const tafsirData = await tafsirRes.json();
+                
+                currentSurahTafsirArray = tafsirData.data.ayahs;
                 txtContainer.innerHTML = '';
 
-                // إدارة البسملة العلوية بالهيدر
+                // معالجة وحل مشكلة البسملة المتكررة
                 if(num !== 1 && num !== 9) {
                     document.getElementById('surahBasmalaSlot').innerText = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
                     document.getElementById('surahBasmalaSlot').style.display = "block";
@@ -402,40 +505,120 @@
                     document.getElementById('surahBasmalaSlot').style.display = "none";
                 }
 
-                let processedText = '';
-                data.data.ayahs.forEach(a => {
+                let processedHtml = '';
+                quranData.data.ayahs.forEach((a, index) => {
                     let ayahString = a.text;
 
-                    // الحل الجذري للتكرار: فحص الكلمات وتطهير مقدمة الآية الأولى برمجياً بدون التأثر بالتشكيل العثماني
+                    // إزالة تكرار البسملة المدمجة في مصفوفة الآية الأولى برمجياً
                     if (a.numberInSurah === 1 && num !== 1 && num !== 9) {
                         if (ayahString.startsWith("بِسْمِ")) {
                             let words = ayahString.split(" ");
-                            // نقوم بإزالة أول 4 كلمات بالتمام (بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ)
                             if (words.length >= 4) {
                                 ayahString = words.slice(4).join(" ");
                             }
                         }
                     }
 
-                    processedText += `${ayahString} <span class="ayah-num">﴾${a.numberInSurah}﴿</span> `;
+                    processedHtml += `<span class="ayah-span" id="ayah-item-${index}" onclick="showAyahTafsir(${index})">${ayahString} <span class="ayah-num">﴾${a.numberInSurah}﴿</span></span> `;
                 });
                 
-                txtContainer.innerHTML = processedText;
+                txtContainer.innerHTML = processedHtml;
             } catch (e) {
-                txtContainer.innerHTML = 'حدث خلل في استدعاء مصفوفة البيانات.';
+                txtContainer.innerHTML = 'حدث خلل أثناء جلب مصفوفة السورة، يرجى التحقق من اتصال الإنترنت.';
+            }
+        }
+
+        // دالة إظهار التفسير الميسر عند الضغط على الآية
+        function showAyahTafsir(index) {
+            document.querySelectorAll('.ayah-span').forEach(el => el.classList.remove('active-highlight'));
+            document.getElementById(`ayah-item-${index}`).classList.add('active-highlight');
+            
+            if(currentSurahTafsirArray[index]) {
+                document.getElementById('tafsirContentBox').innerText = currentSurahTafsirArray[index].text;
+            }
+        }
+
+        // التنقل بين السور (السابق والتالي)
+        function navigateSurah(direction) {
+            let targetSurah = currentLoadedSurahNum + direction;
+            if(targetSurah >= 1 && targetSurah <= 114) {
+                let nextSurahObj = allSurahs.find(s => s.number === targetSurah);
+                if(nextSurahObj) {
+                    renderSurahReader(nextSurahObj.number, nextSurahObj.name);
+                }
             }
         }
 
         function closeSurah() {
+            // إيقاف الصوت عند الخروج للفهرس منعاً للإزعاج
+            document.getElementById('quranAudioPlayer').pause();
             document.getElementById('quranReader').style.display = 'none';
             document.getElementById('quranIndex').style.display = 'block';
         }
 
-        // ================= 3. محرك البحث الصوتي المطور والمقاوم للأخطاء =================
+        // التحقق وإظهار كارت استكمال القراءة بالصفحة الرئيسية
+        function checkLastSavedBookmark() {
+            let savedNum = localStorage.getItem('lastReadSurahNum');
+            let savedName = localStorage.getItem('lastReadSurahName');
+            
+            if(savedNum && savedName) {
+                document.getElementById('continueSurahLabel').innerText = `سورة ${savedName}`;
+                document.getElementById('continueReadingCard').style.display = "block";
+            } else {
+                document.getElementById('continueReadingCard').style.display = "none";
+            }
+        }
+
+        function resumeLastReadSurah() {
+            let savedNum = parseInt(localStorage.getItem('lastReadSurahNum'));
+            let savedName = localStorage.getItem('lastReadSurahName');
+            if(savedNum && savedName) {
+                switchTab('quran');
+                renderSurahReader(savedNum, savedName);
+            }
+        }
+
+        // ================= 3. إدارة مشغل الصوت والربط بالشيوخ مع التكرار =================
+        function changeReciterAudio() {
+            if(currentLoadedSurahNum === 0) return;
+            
+            const baseServer = document.getElementById('reciterSelect').value;
+            // تنسيق رقم السورة ليصبح بثلاث خانات (مثل: 001, 023, 114) ليتوافق مع خوادم البث المباشر
+            const formattedNum = String(currentLoadedSurahNum).padStart(3, '0');
+            const targetAudioUrl = `${baseServer}${formattedNum}.mp3`;
+            
+            const player = document.getElementById('quranAudioPlayer');
+            player.src = targetAudioUrl;
+            player.load();
+            
+            totalPlayCounter = 1; // تصفير عداد التكرار الداخلي عند تغيير السورة
+        }
+
+        // ربط منطق التكرار الذكي عند انتهاء المقطع الصوتي
+        document.getElementById('quranAudioPlayer').addEventListener('ended', () => {
+            const player = document.getElementById('quranAudioPlayer');
+            const loopSetting = document.getElementById('audioRepeatSelect').value;
+            
+            if(loopSetting === 'inf') {
+                player.currentTime = 0;
+                player.play();
+            } else {
+                let maxRepeats = parseInt(loopSetting);
+                if(totalPlayCounter < maxRepeats) {
+                    totalPlayCounter++;
+                    player.currentTime = 0;
+                    player.play();
+                } else {
+                    console.log("اكتملت عدد مرات التكرار المطلوبة بنجاح.");
+                }
+            }
+        });
+
+        // ================= 4. محرك البحث الصوتي الذكي الاحتياطي =================
         function startVoiceSearch() {
             const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRec) {
-                alert("المتصفح لا يدعم ميزة الإدخال الصوتي، استخدم متصفح كروم.");
+                alert("المتصفح لا يدعم البحث الصوتي الحركي، يرجى الكتابة يدوياً.");
                 return;
             }
             const rec = new SpeechRec();
@@ -451,17 +634,14 @@
         }
 
         function executeVoiceMatch(rawText) {
-            let cleanQuery = ultraCleanArabicText(rawText);
-            let matched = allSurahs.find(s => ultraCleanArabicText(s.name) === cleanQuery || ultraCleanArabicText(s.name).includes(cleanQuery));
-            
+            let cleanQuery = rawText.replace(/[\u064B-\u065F]/g, "").replace(/[أإآا]/g, "ا").replace(/ة/g, "ه").replace("سوره", "").trim();
+            let matched = allSurahs.find(s => s.name.includes(cleanQuery) || cleanQuery.includes(s.name));
             if (matched) {
                 renderSurahReader(matched.number, matched.name);
-            } else {
-                alert(`لم أستطع العثور على سورة باسم متطابق لـ: ${rawText}`);
             }
         }
 
-        // ================= 4. نظام السبحة الذكية والمطورة (النمط التلقائي) =================
+        // ================= 5. السبحة الإلكترونية التلقائية والمخصصة =================
         function onTasbeehSelectChange() {
             const type = document.getElementById('tasbeehWordSelect').value;
             if(type !== 'auto') {
@@ -472,7 +652,6 @@
         }
 
         function updateAutoTasbeehWord() {
-            // توزيع ذكي: تغيير الجملة أوتوماتيكياً بعد كل 33 ضغطة متتالية
             let idx = Math.floor(globalTasbeehCount / 33) % tasbeehArr.length;
             document.getElementById('tasbeehDisplayWord').innerText = tasbeehArr[idx] + " (نمط تلقائي ذكي)";
         }
@@ -480,7 +659,6 @@
         function incrementTasbeehCore() {
             globalTasbeehCount++;
             document.getElementById('tasbeehCounterBtn').innerText = globalTasbeehCount;
-            
             if(document.getElementById('tasbeehWordSelect').value === 'auto') {
                 updateAutoTasbeehWord();
             }
@@ -492,7 +670,7 @@
             onTasbeehSelectChange();
         }
 
-        // ================= 5. مساعد رتيل التوجيهي الذكي (Local NLP Guide Bot) =================
+        // ================= 6. المساعد التفاعلي الخارق والبطاقات القابلة للنقر =================
         function handleChatKey(e) { if(e.key === 'Enter') processAiCommand(); }
 
         function processAiCommand() {
@@ -505,7 +683,7 @@
 
             setTimeout(() => {
                 analyzeAndExecuteAiReply(userTxt);
-            }, 400);
+            }, 350);
         }
 
         function appendChatMessage(txt, sender) {
@@ -517,77 +695,106 @@
         function analyzeAndExecuteAiReply(txt) {
             const lowText = txt.toLowerCase();
             
-            // 1. تتبع قسم القران والمصحف
-            if(lowText.includes('قران') || lowText.includes('المصحف') || lowText.includes('سوره') || lowText.includes('اقرا')) {
-                // محاولة ذكية لمعرفة إذا كتب اسم سورة معينة في الشات
-                let foundSurah = null;
+            // الفحص والتحقق الذكي إذا طلب المستخدم فتح سورة معينة بالاسم صراحة داخل الشات
+            let targetSurahObject = null;
+            if(allSurahs.length > 0) {
                 for(let s of allSurahs) {
                     if(lowText.includes(s.name)) {
-                        foundSurah = s;
+                        targetSurahObject = s;
                         break;
                     }
                 }
-                
-                if(foundSurah) {
-                    switchTab('quran');
-                    renderSurahReader(foundSurah.number, foundSurah.name);
-                    appendChatMessage(`أبشر يا غالي! قمت بتوجيهك فوراً إلى المصحف الشريف وفتحت لك سورة **${foundSurah.name}**. قراءة خاشعة وممتعة!`, 'bot');
-                } else {
-                    switchTab('quran');
-                    appendChatMessage('تم نقلك وتوجيهك إلى قسم المصحف الشريف، تفضل باختيار السورة التي تود تلاوتها الآن.', 'bot');
-                }
+            }
+
+            if(targetSurahObject) {
+                let htmlResponse = `
+                    أبشر يا غالي، فهمت طلبك! وجدت أنك تبحث عن **سورة ${targetSurahObject.name}**. يمكنك الانتقال وفتحها والاستماع إليها مباشرة من خلال الزر التفاعلي بالأسفل:
+                    <br>
+                    <button class="bot-card-btn" onclick="switchTab('quran'); renderSurahReader(${targetSurahObject.number}, '${targetSurahObject.name}');"><i class="fas fa-book-open"></i> افتح سورة ${targetSurahObject.name} الآن</button>
+                `;
+                appendChatMessage(htmlResponse, 'bot');
                 return;
             }
 
-            // 2. تتبع قسم السبحة والاستغفار
-            if(lowText.includes('سبحه') || lowText.includes('اسبح') || lowText.includes('استغفر') || lowText.includes('تسببح')) {
-                switchTab('tasbeeh');
-                appendChatMessage('أبشر، فتحت لك شاشة السبحة الإلكترونية المطورة والمزودة بالنمط الذكي التلقائي. اذكر الله يذكرك.', 'bot');
+            // تتبع كلمات مفتاحية عن القرآن والمصحف
+            if(lowText.includes('قران') || lowText.includes('المصحف') || lowText.includes('ايات') || lowText.includes('اقرا')) {
+                let htmlResponse = `
+                    المصحف الشريف كامل بالرسم العثماني متوفر في المنصة ومزود بتلاوة فخرية للشيخ خالد الجليل وتفسير فوري! اضغط على الزر أدناه للانتقال السريع:
+                    <br>
+                    <button class="bot-card-btn" onclick="switchTab('quran')"><i class="fas fa-book-open"></i> الذهاب للمصحف الشريف</button>
+                `;
+                appendChatMessage(htmlResponse, 'bot');
                 return;
             }
 
-            // 3. تتبع أوقات الصلاة واللوحة الرئيسية
+            // تتبع كلمات الاستغفار والسبحة
+            if(lowText.includes('سبحه') || lowText.includes('اسبح') || lowText.includes('استغفر') || lowText.includes('اذكار') || lowText.includes('تسبیح')) {
+                let htmlResponse = `
+                    تم تجهيز لوحة السبحة الإلكترونية الذكية بنظام التحويل التلقائي الذكي كل 33 تسبيحة لمساعدتك على الأوراد. اضغط هنا للبدء:
+                    <br>
+                    <button class="bot-card-btn" onclick="switchTab('tasbeeh')"><i class="fas fa-fingerprint"></i> فتح السبحة الإلكترونية</button>
+                `;
+                appendChatMessage(htmlResponse, 'bot');
+                return;
+            }
+
+            // تتبع الكلمات الخاصة بالصلاة واللوحة الرئيسية
             if(lowText.includes('صلاه') || lowText.includes('وقت') || lowText.includes('اذان') || lowText.includes('الرئيسيه') || lowText.includes('موقع')) {
-                switchTab('dashboard');
-                appendChatMessage('تفضل، قمت بنقلك للوحة التحكم الرئيسية المحدثة جغرافياً بأوقات الأذان والصلوات الخمس حسب موقعك الحالي.', 'bot');
+                let htmlResponse = `
+                    أبشر، أوقات الصلاة والصلوات الخمس محدثة جغرافياً بناءً على موقع شبكتك الحالي. اضغط للعودة إلى اللوحة الرئيسية:
+                    <br>
+                    <button class="bot-card-btn" onclick="switchTab('dashboard')"><i class="fas fa-home"></i> العودة للرئيسية</button>
+                `;
+                appendChatMessage(htmlResponse, 'bot');
                 return;
             }
 
-            // رد افتراضي توجيهي في حال عدم فهم الاختصار
-            appendChatMessage('أنا مساعدك الذكي المباشر للتنقل السريع في المنصة، يمكنك أن تطلب مني أوامر مثل: "افتح سورة الملك"، "أبي أستغفر"، أو "أوقات الصلاة" وسأنفذها لك بالثانية!', 'bot');
+            // الرد الذكي المساعد الافتراضي في حال عدم وجود كلمة دلالية مباشرة
+            let defaultResponse = `
+                أنا مساعدك التوجيهي الذكي بالكامل، قمت بترقية فهمي لخدمتك! يمكنك كتابة عبارات مرنة وسأعطيك بطاقة انتقال ذكية فوراً، مثل:
+                <br>
+                • "أبي أقرأ القرآن" <br>
+                • "شغل سورة الكهف" <br>
+                • "وين السبحة" <br>
+                • "كم باقي على الأذان"
+            `;
+            appendChatMessage(defaultResponse, 'bot');
         }
 
-        // داتا مخصصة للأذكار التفاعلية بالواجهة الرئيسية
+        // ================= 7. عينات لوحة التحكم التفاعلية والريفريش العشوائي =================
         function initDashboardAdhkar() {
             const container = document.getElementById('dashboardAdhkar');
-            const sAdhkar = [
-                "أستغفر الله العظيم وأتوب إليه (اضغط للتسبيح الخفيف)",
-                "اللهم صل وسلم على نبينا محمد وعل آله وصحبه"
+            const sampleAdhkar = [
+                "أستغفر الله العظيم وأتوب إليه (انقر للاحتساب السريع)",
+                "اللهم صل وسلم على نبينا محمد وعلى آله وصحبه أجمعين"
             ];
-            sAdhkar.forEach((txt, idx) => {
+            container.innerHTML = '';
+            sampleAdhkar.forEach((txt) => {
                 container.innerHTML += `
-                    <div class="prayer-card" style="text-align:right; cursor:pointer; padding:12px; background:rgba(255,255,255,0.01);" onclick="this.style.opacity=0.4">
+                    <div class="prayer-card" style="text-align:right; cursor:pointer; padding:12px; background:rgba(255,255,255,0.01);" onclick="this.style.opacity=0.35">
                         <p style="font-size:14px; color:var(--text-main);"><i class="fas fa-check-circle" style="color:var(--accent); margin-left:8px;"></i> ${txt}</p>
                     </div>
                 `;
             });
         }
 
-        // تحديث محتوى الإضاءات الجانبية بشكل عشوائي فخم عند كل ريفريش
-        function randomizeSidebarWidgets() {
-            const texts = [
-                "«من سلك طريقاً يلتمس فيه علماً، سهل الله له به طريقاً إلى الجنة» (رواه مسلم).",
-                "«كلمتان خفيفتان على اللسان، ثقيلتان في الميزان: سبحان الله وبحمده، سبحان الله العظيم»."
-            ];
-            document.getElementById('sunnahHadithBox').innerText = texts[Math.floor(Math.random() * texts.length)];
+        // خوارزمية الاختيار العشوائي الفخم عند كل ريفريش كامل للمنصة
+        function executeRandomRefreshWidgets() {
+            const randomHadith = staticHadiths[Math.floor(Math.random() * staticHadiths.length)];
+            const randomSunnah = staticSunns = staticSunnahs[Math.floor(Math.random() * staticSunnahs.length)];
+            const randomLight = staticLights[Math.floor(Math.random() * staticLights.length)];
+
+            document.getElementById('sunnahHadithBox').innerText = randomHadith;
+            document.getElementById('abandonedSunnahBox').innerText = randomSunnah;
+            document.getElementById('spiritualLightBox').innerText = randomLight;
         }
 
-        // تشغيل البنية التحتية البرمجية عند إقلاع الصفحة أول مرة
+        // إقلاع وتشغيل البنية التحتية البرمجية عند تحميل المنصة فوراً
         window.onload = () => {
             detectUserLocationAndPrayers();
             initQuranDatabase();
             initDashboardAdhkar();
-            randomizeSidebarWidgets();
+            executeRandomRefreshWidgets();
             onTasbeehSelectChange();
         };
     </script>
