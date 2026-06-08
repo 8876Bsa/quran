@@ -130,6 +130,7 @@
         .ayah-span:hover { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
         .ayah-span.active-highlight { background: rgba(251, 191, 36, 0.2); color: var(--gold); }
         
+        /* علامة نهاية الآية الفخمة مثل المصحف الحقيقي */
         .ayah-node {
             display: inline-flex;
             align-items: center;
@@ -184,6 +185,7 @@
         .chat-input-area { display: flex; gap: 10px; }
         .chat-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 12px; padding: 14px; color: white; outline: none; font-family: Tajawal; }
 
+        /* خيارات الاسئلة الجاهزة في الذكاء الاصطناعي */
         .ai-quick-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding: 0 5px; }
         .chip-btn { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 500; cursor: pointer; }
         .chip-btn:hover { background: var(--accent); color: white; }
@@ -255,9 +257,7 @@
 
                     <div class="glass-card">
                         <h3 style="margin-bottom: 15px; color: var(--accent);"><i class="fas fa-sparkles"></i> حصن نفسك اليوم</h3>
-                        <div style="display: flex; flex-direction: column; gap: 12px;" id="dashboardAdhkar">
-                            <p style="color:var(--text-main);">"اللَّهُمَّ أَنْتَ رَبِّي لا إِلَهَ إِلا أَنْتَ ، خَلَقْتَنِي وَأَنَا عَبْدُكَ ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ..."</p>
-                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;" id="dashboardAdhkar"></div>
                     </div>
                 </div>
 
@@ -284,8 +284,8 @@
             
             <div id="quranIndex">
                 <div class="voice-search-bar">
-                    <input type="text" id="surahSearch" class="chat-input" placeholder="ابحث عن سورة بالاسم..." oninput="filterSurahs()">
-                    <button class="btn-primary" onclick="alert('تتطلب الصلاحيات الصوتية في المتصفح')"><i class="fas fa-microphone"></i> بحث صوتي</button>
+                    <input type="text" id="surahSearch" class="chat-input" placeholder="ابحث عن سورة بالاسم...">
+                    <button class="btn-primary" onclick="startVoiceSearch('surahSearch', executeVoiceMatch)"><i class="fas fa-microphone"></i> بحث صوتي</button>
                 </div>
                 <div id="surahsGrid" class="surah-grid"></div>
             </div>
@@ -321,15 +321,29 @@
                     <select id="reciterSelect" onchange="changeReciterAudioCore()">
                         <option value="https://server10.mp3quran.net/jleel/">الشيخ خالد الجليل</option>
                         <option value="https://server7.mp3quran.net/shur/">الشيخ سعود الشريم</option>
-                        <option value="https://server11.mp3quran.net/yasser/">الشيخ ياسر الدوسري</option>
+                        <option value="https://download.quranicaudio.com/quran/mishari_rashid_al_afasy/">الشيخ مشاري العفاسي</option>
+                        <option value="https://download.quranicaudio.com/quran/maher_al_muaiqly/">الشيخ ماهر المعيقلي</option>
                         <option value="https://server10.mp3quran.net/ajm/">الشيخ أحمد العجمي</option>
+                        <option value="https://server11.mp3quran.net/yasser/">الشيخ ياسر الدوسري</option>
+                        <option value="https://download.quranicaudio.com/quran/muhammad_siddiq_al-minshawi/">الشيخ محمد الصديق المنشاوي 🌟</option>
+                        <option value="https://download.quranicaudio.com/quran/mahmoud_khalil_al_husary/">الشيخ محمود خليل الحصري 🌟</option>
+                        <option value="https://download.quranicaudio.com/quran/abdul_basit_muhammad_abdus_samad_murattal/">الشيخ عبد الباسط عبد الصمد</option>
+                    </select>
+                </div>
+                <div>
+                    <i class="fas fa-arrows-spin" style="color:var(--gold); margin-left:5px;"></i>
+                    <select id="audioRepeatSelect">
+                        <option value="1">تشغيل مرة واحدة</option>
+                        <option value="2">تكرار مرتين</option>
+                        <option value="3">تكرار 3 مرات</option>
+                        <option value="inf">تكرار مستمر 🔄</option>
                     </select>
                 </div>
                 <audio id="quranAudioPlayer" controls></audio>
             </div>
 
             <div id="audioTafsirBasmala" class="basmala-header"></div>
-            <div id="audioTafsirTextContainer" class="quran-text" style="max-height:350px; font-size: 20px;">اختر سورة من الأعلى لعرض آياتها للتدبر...</div>
+            <div id="audioTafsirTextContainer" class="quran-text" style="max-height:350px;">اختر سورة من الأعلى لعرض آياتها للتدبر...</div>
 
             <div class="tafsir-card">
                 <div style="font-size:15px; color:var(--gold); font-weight:bold; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
@@ -346,6 +360,7 @@
             <div class="glass-card">
                 <div class="voice-search-bar">
                     <input type="text" id="virtueSearchInput" class="chat-input" placeholder="اكتب الفضيلة للبحث عنها (مثال: الصلاة، بر الوالدين، القرآن)..." oninput="searchVirtuesCore()">
+                    <button class="btn-primary" onclick="startVoiceSearch('virtueSearchInput', executeVirtueVoiceMatch)"><i class="fas fa-microphone"></i> بحث صوتي</button>
                 </div>
                 
                 <div class="hadith-result-container" id="virtuesDisplayContainer"></div>
@@ -388,7 +403,7 @@
                 </div>
 
                 <div class="chat-messages" id="chatMessages">
-                    <div class="msg bot">مرحباً بك يا محمد! أنا مساعدك التوجيهي الشامل. لقد قمت بإضافة أزرار خيارات جاهزة لك في الأعلى، يمكنك النقر على أي استفسار مباشرة وسأجيبك بالدليل والروابط السريعة فوراً دون حاجة للكتابة!</div>
+                    <div class="msg bot">مرحباً بك! أنا مساعدك التوجيهي الشامل. لقد قمت بإضافة أزرار خيارات جاهزة لك في الأعلى، يمكنك النقر على أي استفسار مباشرة وسأجيبك بالدليل والروابط السريعة فوراً دون حاجة للكتابة!</div>
                 </div>
                 <div class="chat-input-area">
                     <input type="text" id="chatInputField" class="chat-input" placeholder="أو يمكنك كتابة أي استفسار مخصص هنا..." onkeypress="handleChatKey(event)">
@@ -402,31 +417,79 @@
     <script>
         let allSurahs = [];
         let currentLoadedSurahNum = 0;
+        let currentLoadedSurahName = "";
         let globalTasbeehCount = 0;
+        let currentSurahTafsirArray = [];
+        let totalPlayCounter = 1;
         
         const tasbeehArr = ["سُبْحَانَ اللَّهِ", "الْحَمْدُ لِلَّهِ", "لَا إِلَهَ إِلَّا اللَّهُ", "اللَّهُ أَكْبَرُ", "أَسْتَغْفِرُ اللَّهَ العَظِيمَ"];
 
+        // قاعدة بيانات موسوعة الفضائل والأحاديث الشاملة
         const virtuesDatabase = [
-            { topic: "فضل الصلاة", keywords: ["صلاة", "الصلاة"], desc: "الصلاة هي ركن الدين وعماده...", proof: "قال النبي ﷺ: «مَثَلُ الصَّلَوَاتِ الْخَمْسِ...»" },
-            { topic: "فضل بر الوالدين", keywords: ["والدين", "بر"], desc: "بر الوالدين وطاعتهما من أحب الأعمال...", proof: "عن عبد الله بن مسعود رضي الله عنه..." },
-            { topic: "فضل قراءة القرآن الكريم", keywords: ["قرآن", "قراءة"], desc: "قراءة القرآن ترفع درجات العبد...", proof: "قال رسول الله ﷺ: «اقْرَءُوا الْقُرْآنَ...»" },
-            { topic: "فضل الذكر والاستغفار", keywords: ["ذكر", "استغفار"], desc: "الذكر والاستغفار يفرجان الهموم...", proof: "قوله تعالى: ﴿فَقُلْتُ اسْتَغْفِرُوا رَبَّكُمْ...﴾" }
+            {
+                topic: "فضل الصلاة",
+                keywords: ["صلاة", "الصلاة", "صلوات", "الفريضة"],
+                desc: "الصلاة هي ركن الدين وعماده، وهي أول ما يحاسب عليه العبد يوم القيامة، وتكفر السيئات والخطايا وتجلب الطمأنينة.",
+                proof: "قال النبي ﷺ: «مَثَلُ الصَّلَوَاتِ الْخَمْسِ كَمَثَلِ نَهْرٍ جَارٍ غَمْرٍ عَلَى بَابِ أَحَدِكُمْ يَغْتَسِلُ مِنْهُ كُلَّ يَوْمٍ خَمْسَ مَرَّاتٍ» (رواه مسلم). وقال تعالى: ﴿إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ﴾."
+            },
+            {
+                topic: "فضل بر الوالدين",
+                keywords: ["والدين", "الوالدين", "بر", "امي", "ابوي", "الأب", "الأم"],
+                desc: "بر الوالدين وطاعتهما من أحب الأعمال إلى الله عز وجل، وهو سبب رئيسي لدخول الجنة والتوفيق في الدنيا والآخرة.",
+                proof: "عن عبد الله بن مسعود رضي الله عنه قال: سألت النبي ﷺ أي العمل أحب إلى الله؟ قال: «الصلاة على وقتها»، قلت ثم أي؟ قال: «بر الوالدين» (متفق عليه). وقال تعالى: ﴿وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا﴾."
+            },
+            {
+                topic: "فضل قراءة القرآن الكريم",
+                keywords: ["قرآن", "القرآن", "قراءة", "تلاوة", "حرف", "المصحف"],
+                desc: "قراءة القرآن الكريم ترفع درجات العبد، ويأتي شفيعاً لأصحابه يوم القيامة، وللقارئ بكل حرف حسنة والحسنة بعشر أمثالها.",
+                proof: "قال رسول الله ﷺ: «اقْرَءُوا الْقُرْآنَ فَإِنَّهُ يَأْتِي يَوْمَ الْقِيَامَةِ شَفِيعًا لِأَصْحَابِهِ» (رواه مسلم). وقال ﷺ: «مَنْ قَرَأَ حَرْفًا مِنْ كِتَابِ اللَّهِ فَلَهُ بِهِ حَسَنَةٌ، وَالْحَسَنَةُ بِعَشْرِ أَمْثَالِهَا»."
+            },
+            {
+                topic: "فضل الذكر والاستغفار",
+                keywords: ["ذكر", "الذكر", "استغفار", "الاستغفار", "تسببح", "سبحة"],
+                desc: "الذكر والاستغفار يفرجان الهموم، ويجلبان الرزق البركة والخير، ويحطان الخطايا وتطمئن بهما القلوب الجلة.",
+                proof: "قوله تعالى: ﴿فَقُلْتُ اسْتَغْفِرُوا رَبَّكُمْ إِنَّهُ كَانَ غَفَّارًا * يُرْسِلِ السَّمَاءَ عَلَيْكُم مِّدْرَارًا * وَيُمْدِدْكُم بِأَمْوَالٍ وَبَنِينَ﴾، وقال ﷺ: «مَنْ لَزِمَ الِاسْتِغْفَارَ جَعَلَ اللَّهُ لَهُ مِنْ كُلِّ ضِيقٍ مَخْرَجًا، وَمِنْ كُلِّ هَمٍّ فَرَجًا»."
+            },
+            {
+                topic: "فضل قيام الليل",
+                keywords: ["قيام", "الليل", "الوتر", "التهجد", "تراويح"],
+                desc: "قيام الليل هو شرف المؤمن، ودأب الصالحين، وطريق القرب إلى الله عز وجل في ثلث الليل الآخر حين ينزل سبحانه مستجيباً للدعاء.",
+                proof: "قال النبي ﷺ: «عَلَيْكُمْ بِقِيَامِ اللَّيْلِ فَإِنَّهُ دَأْبُ الصَّالِحِينَ قَبْلَكُمْ، وَهُوَ قُرْبَةٌ إِلَى رَبِّكُمْ، وَمَكْفَرَةٌ لِلسَّيِّئَاتِ» (رواه الترمذي). وعن النبي ﷺ قال: «ينزل ربنا تبارك وتعالى كل ليلة إلى السماء الدنيا حين يبقى ثلث الليل الآخر فيقول: من يدعوني فأستجيب له؟»."
+            },
+            {
+                topic: "فضل الصدقة",
+                keywords: ["صدقة", "الصدقة", "زكاة", "تبرع", "مال"],
+                desc: "الصدقة تطفئ غضب الرب وتداوي المرضى، وتزيد البركة في المال، وتظل صاحبها تحت ظل العرش يوم القيامة.",
+                proof: "قال النبي ﷺ: «وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ» (رواه الترمذي). وقال تعالى: ﴿مَّن ذَا الَّذِي يُقْرِضُ اللَّهَ قَرْضًا حَسَنًا فَيُضَاعِفَهُ لَهُ أَضْعَافًا كَثِيرَةً﴾."
+            }
         ];
 
-        const staticHadiths = ["«من سلك طريقاً يلتمس فيه علماً، سهل الله له به طريقاً إلى الجنة»", "«خيركم من تعلم القرآن وعلمه»"];
-        const staticSunnahs = ["قراءة سورة الملك قبل النوم.", "الوضوء قبل الذهاب إلى الفراش."];
-        const staticLights = ["تدبر آية واحدة بتأمل خير من قراءة ختمة بلا وعي.", "الاستغفار يفتح الأقفال."];
+        const staticHadiths = [
+            "قال رسول الله ﷺ: «من سلك طريقاً يلتمس فيه علماً، سهل الله له به طريقاً إلى الجنة» (رواه مسلم).",
+            "قال رسول الله ﷺ: «كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن: سبحان الله وبحمده، سبحان الله العظيم» (متفق عليه).",
+            "قال رسول الله ﷺ: «خيركم من تعلم القرآن وعلمه» (رواه البخاري)."
+        ];
+
+        const staticSunnahs = [
+            "التكبير عند صعود المرتفعات، والتسبيح عند النزول والانحدار.",
+            "قراءة سورة الملك قبل النوم فإنها المنجية من عذاب القبر.",
+            "الوضوء قبل الذهاب إلى الفراش ونفض الفراش ثلاثاً."
+        ];
+
+        const staticLights = [
+            "تدبر آية واحدة من كتاب الله بتأمل وفهم، خير للقلب وأنفع له من قراءة ختمة كاملة بلا وعي.",
+            "الاستغفار يفتح الأقفال، ويشرح البال، ويكثر الأموال، ويصلح الحال."
+        ];
 
         function switchTab(tabId) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(nav => nav.className = 'nav-item');
             document.getElementById(tabId).classList.add('active');
             
             const icons = { 'dashboard':0, 'quran':1, 'audio-tafsir':2, 'hadith-encyclopedia':3, 'tasbeeh':4, 'ai-assistant':5 };
-            document.querySelectorAll('.nav-item')[icons[tabId]].classList.add('active');
+            document.querySelectorAll('.nav-item')[icons[tabId]].className = 'nav-item active';
         }
 
-        // --- أوقات الصلاة والموقع ---
         async function detectUserLocationAndPrayers() {
             try {
                 const ipRes = await fetch('https://ipapi.co/json/');
@@ -446,216 +509,448 @@
                 const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}&method=4`);
                 const data = await res.json();
                 const t = data.data.timings;
-                
                 document.getElementById('pt-Fajr').innerText = convertTo12Hour(t.Fajr);
                 document.getElementById('pt-Dhuhr').innerText = convertTo12Hour(t.Dhuhr);
                 document.getElementById('pt-Asr').innerText = convertTo12Hour(t.Asr);
                 document.getElementById('pt-Maghrib').innerText = convertTo12Hour(t.Maghrib);
                 document.getElementById('pt-Isha').innerText = convertTo12Hour(t.Isha);
-            } catch(e) {
-                console.log("خطأ في جلب الصلاة");
-            }
+            } catch(e) { console.log("خطأ استدعاء أوقات الصلاة"); }
         }
 
-        function convertTo12Hour(time) {
-            let [h, m] = time.split(':');
-            h = parseInt(h);
-            let ampm = h >= 12 ? 'م' : 'ص';
+        function convertTo12Hour(t24) {
+            let [h, m] = t24.split(':');
+            let period = h >= 12 ? 'م' : 'ص';
             h = h % 12 || 12;
-            return `${h}:${m} ${ampm}`;
+            return `${h}:${m} ${period}`;
         }
 
-        // --- تهيئة البيانات ---
-        function loadDashboardData() {
-            document.getElementById('sunnahHadithBox').innerText = staticHadiths[Math.floor(Math.random() * staticHadiths.length)];
-            document.getElementById('abandonedSunnahBox').innerText = staticSunnahs[Math.floor(Math.random() * staticSunnahs.length)];
-            document.getElementById('spiritualLightBox').innerText = staticLights[Math.floor(Math.random() * staticLights.length)];
-        }
-
-        // --- المصحف الشريف ---
-        async function fetchQuranList() {
+        async function initQuranDatabase() {
             try {
                 const res = await fetch('https://api.alquran.cloud/v1/surah');
                 const data = await res.json();
                 allSurahs = data.data;
-                renderSurahsGrid(allSurahs);
-                
-                const select = document.getElementById('audioTafsirSurahSelect');
-                select.innerHTML = '<option value="">-- اختر السورة --</option>';
-                allSurahs.forEach(s => select.innerHTML += `<option value="${s.number}">${s.name}</option>`);
+                populateSurahCards(allSurahs);
+                populateAudioTafsirSelectDropdown(allSurahs);
+                checkLastSavedBookmark();
             } catch (e) {
-                console.log("Error loading Quran");
+                document.getElementById('surahsGrid').innerHTML = '<p style="color:red; padding:20px;">خطأ في تحميل الفهرس.</p>';
             }
         }
 
-        function renderSurahsGrid(list) {
+        function populateSurahCards(list) {
             const grid = document.getElementById('surahsGrid');
             grid.innerHTML = '';
             list.forEach(s => {
                 grid.innerHTML += `
-                <div class="surah-btn" onclick="openSurah(${s.number}, '${s.name}')">
-                    <span>${s.name}</span>
-                    <span class="surah-num">${s.number}</span>
-                </div>`;
+                    <div class="surah-btn" onclick="renderSurahReader(${s.number}, '${s.name}')">
+                        <span>سورة ${s.name}</span>
+                        <div class="surah-num">${s.number}</div>
+                    </div>
+                `;
             });
         }
 
-        function filterSurahs() {
-            const q = document.getElementById('surahSearch').value;
-            const filtered = allSurahs.filter(s => s.name.includes(q));
-            renderSurahsGrid(filtered);
+        function populateAudioTafsirSelectDropdown(list) {
+            const selectDropdown = document.getElementById('audioTafsirSurahSelect');
+            selectDropdown.innerHTML = '<option value="">-- اضغط للاختيار والقراءة --</option>';
+            list.forEach(s => {
+                selectDropdown.innerHTML += `<option value="${s.number}">سورة ${s.name}</option>`;
+            });
         }
 
-        async function openSurah(num, name) {
+        document.getElementById('surahSearch').addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            const filtered = allSurahs.filter(s => s.name.includes(val));
+            populateSurahCards(filtered);
+        });
+
+        /* عرض السورة في وضع القراءة المصلح تماماً (بدون مشاكل انعكاس الأقواس) */
+        async function renderSurahReader(num, name) {
+            currentLoadedSurahNum = num;
+            currentLoadedSurahName = name;
+            
+            localStorage.setItem('lastReadSurahNum', num);
+            localStorage.setItem('lastReadSurahName', name);
+            checkLastSavedBookmark();
+
             document.getElementById('quranIndex').style.display = 'none';
             document.getElementById('quranReader').style.display = 'block';
-            document.getElementById('currentSurahName').innerText = name;
-            currentLoadedSurahNum = num;
-            localStorage.setItem('lastReadSurah', JSON.stringify({num, name}));
+            document.getElementById('currentSurahName').innerText = `سورة ${name}`;
             
-            const basmala = document.getElementById('surahBasmalaSlot');
-            basmala.innerText = (num !== 1 && num !== 9) ? "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" : "";
-            
-            document.getElementById('currentSurahText').innerHTML = "جاري تحميل الآيات...";
+            const txtContainer = document.getElementById('currentSurahText');
+            txtContainer.innerHTML = 'جاري تحميل الآيات الكريمة للقراءة...';
+
+            document.getElementById('prevSurahBtn').style.opacity = (num === 1) ? "0.3" : "1";
+            document.getElementById('nextSurahBtn').style.opacity = (num === 114) ? "0.3" : "1";
+
             try {
-                const res = await fetch(`https://api.alquran.cloud/v1/surah/${num}`);
-                const data = await res.json();
-                let html = '';
-                data.data.ayahs.forEach(a => {
-                    let txt = a.text;
-                    if(num !== 1 && a.numberInSurah === 1) txt = txt.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ", "");
-                    html += `<span class="ayah-span">${txt} <span class="ayah-node">${a.numberInSurah}</span></span> `;
+                const quranRes = await fetch(`https://api.alquran.cloud/v1/surah/${num}/quran-uthmani`);
+                const quranData = await quranRes.json();
+                
+                txtContainer.innerHTML = '';
+
+                if(num !== 1 && num !== 9) {
+                    document.getElementById('surahBasmalaSlot').innerText = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
+                    document.getElementById('surahBasmalaSlot').style.display = "block";
+                } else {
+                    document.getElementById('surahBasmalaSlot').style.display = "none";
+                }
+
+                let processedHtml = '';
+                quranData.data.ayahs.forEach((a) => {
+                    let ayahString = a.text;
+                    if (a.numberInSurah === 1 && num !== 1 && num !== 9) {
+                        if (ayahString.startsWith("بِسْمِ")) {
+                            let words = ayahString.split(" ");
+                            if (words.length >= 4) { ayahString = words.slice(4).join(" "); }
+                        }
+                    }
+                    // استخدام التنسيق الدائري الثابت للآية لمنع الالتفاف والانعكاس
+                    processedHtml += `<span>${ayahString}<span class="ayah-node">${a.numberInSurah}</span></span> `;
                 });
-                document.getElementById('currentSurahText').innerHTML = html;
-            } catch(e) {
-                document.getElementById('currentSurahText').innerHTML = "فشل التحميل.";
+                
+                txtContainer.innerHTML = processedHtml;
+            } catch (e) {
+                txtContainer.innerHTML = 'حدث خلل أثناء تحميل الآيات.';
+            }
+        }
+
+        /* إدارة تفعيل وعرض البيانات في قسم الاستماع والتفسير المستقل */
+        async function loadAudioTafsirSurahCore() {
+            const surahNum = document.getElementById('audioTafsirSurahSelect').value;
+            if(!surahNum) return;
+
+            const txtContainer = document.getElementById('audioTafsirTextContainer');
+            const tafsirDisplay = document.getElementById('tafsirContentBox');
+            
+            txtContainer.innerHTML = 'جاري تحميل كلمات المصحف والتدبر...';
+            tafsirDisplay.innerText = "اضغط على أي آية بالأعلى ليتم عرض تفسيرها هنا بشكل مستمر ومستقل...";
+
+            const baseServer = document.getElementById('reciterSelect').value;
+            const formattedNum = String(surahNum).padStart(3, '0');
+            document.getElementById('quranAudioPlayer').src = `${baseServer}${formattedNum}.mp3`;
+            document.getElementById('quranAudioPlayer').load();
+            totalPlayCounter = 1;
+
+            try {
+                const [quranRes, tafsirRes] = await Promise.all([
+                    fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/quran-uthmani`),
+                    fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ar.muyassar`)
+                ]);
+                
+                const quranData = await quranRes.json();
+                const tafsirData = await tafsirRes.json();
+                
+                currentSurahTafsirArray = tafsirData.data.ayahs;
+                txtContainer.innerHTML = '';
+
+                if(parseInt(surahNum) !== 1 && parseInt(surahNum) !== 9) {
+                    document.getElementById('audioTafsirBasmala').innerText = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
+                    document.getElementById('audioTafsirBasmala').style.display = "block";
+                } else {
+                    document.getElementById('audioTafsirBasmala').style.display = "none";
+                }
+
+                let processedHtml = '';
+                quranData.data.ayahs.forEach((a, index) => {
+                    let ayahString = a.text;
+                    if (a.numberInSurah === 1 && parseInt(surahNum) !== 1 && parseInt(surahNum) !== 9) {
+                        if (ayahString.startsWith("بِسْمِ")) {
+                            let words = ayahString.split(" ");
+                            if (words.length >= 4) { ayahString = words.slice(4).join(" "); }
+                        }
+                    }
+                    processedHtml += `<span class="ayah-span" id="tafsir-item-${index}" onclick="showAyahTafsirCore(${index})">${ayahString}<span class="ayah-node">${a.numberInSurah}</span></span> `;
+                });
+                
+                txtContainer.innerHTML = processedHtml;
+            } catch (e) {
+                txtContainer.innerHTML = 'خطأ أثناء جلب الملفات من الخادم الأساسي.';
+            }
+        }
+
+        function showAyahTafsirCore(index) {
+            document.querySelectorAll('#audioTafsirTextContainer .ayah-span').forEach(el => el.classList.remove('active-highlight'));
+            const targetElement = document.getElementById(`tafsir-item-${index}`);
+            if(targetElement) targetElement.classList.add('active-highlight');
+            
+            if(currentSurahTafsirArray[index]) {
+                document.getElementById('tafsirContentBox').innerText = currentSurahTafsirArray[index].text;
+            }
+        }
+
+        function changeReciterAudioCore() {
+            const surahNum = document.getElementById('audioTafsirSurahSelect').value;
+            if(!surahNum) return;
+            const baseServer = document.getElementById('reciterSelect').value;
+            const formattedNum = String(surahNum).padStart(3, '0');
+            
+            const player = document.getElementById('quranAudioPlayer');
+            player.src = `${baseServer}${formattedNum}.mp3`;
+            player.load();
+            player.play();
+            totalPlayCounter = 1;
+        }
+
+        function navigateSurah(direction) {
+            let targetSurah = currentLoadedSurahNum + direction;
+            if(targetSurah >= 1 && targetSurah <= 114) {
+                let nextSurahObj = allSurahs.find(s => s.number === targetSurah);
+                if(nextSurahObj) { renderSurahReader(nextSurahObj.number, nextSurahObj.name); }
             }
         }
 
         function closeSurah() {
-            document.getElementById('quranIndex').style.display = 'block';
             document.getElementById('quranReader').style.display = 'none';
-            checkContinueReading();
+            document.getElementById('quranIndex').style.display = 'block';
         }
 
-        function navigateSurah(dir) {
-            let next = currentLoadedSurahNum + dir;
-            if (next >= 1 && next <= 114) {
-                let s = allSurahs.find(x => x.number === next);
-                if(s) openSurah(next, s.name);
-            }
-        }
-
-        function checkContinueReading() {
-            const saved = JSON.parse(localStorage.getItem('lastReadSurah'));
-            if (saved) {
-                document.getElementById('continueReadingCard').style.display = 'block';
-                document.getElementById('continueSurahLabel').innerText = saved.name;
+        function checkLastSavedBookmark() {
+            let savedNum = localStorage.getItem('lastReadSurahNum');
+            let savedName = localStorage.getItem('lastReadSurahName');
+            if(savedNum && savedName) {
+                document.getElementById('continueSurahLabel').innerText = `سورة ${savedName}`;
+                document.getElementById('continueReadingCard').style.display = "block";
+            } else {
+                document.getElementById('continueReadingCard').style.display = "none";
             }
         }
 
         function resumeLastReadSurah() {
-            const saved = JSON.parse(localStorage.getItem('lastReadSurah'));
-            if (saved) {
+            let savedNum = parseInt(localStorage.getItem('lastReadSurahNum'));
+            let savedName = localStorage.getItem('lastReadSurahName');
+            if(savedNum && savedName) {
                 switchTab('quran');
-                openSurah(saved.num, saved.name);
+                renderSurahReader(savedNum, savedName);
             }
         }
 
-        // --- الاستماع والتفسير ---
-        function loadAudioTafsirSurahCore() {
-            const num = document.getElementById('audioTafsirSurahSelect').value;
-            if(!num) return;
-            const reciter = document.getElementById('reciterSelect').value;
-            const audio = document.getElementById('quranAudioPlayer');
-            const paddedNum = String(num).padStart(3, '0');
+        document.getElementById('quranAudioPlayer').addEventListener('ended', () => {
+            const player = document.getElementById('quranAudioPlayer');
+            const loopSetting = document.getElementById('audioRepeatSelect').value;
             
-            audio.src = `${reciter}${paddedNum}.mp3`;
-            audio.play().catch(() => {});
-            document.getElementById('audioTafsirTextContainer').innerText = "تم تفعيل التلاوة بنجاح..";
-        }
-        function changeReciterAudioCore() { loadAudioTafsirSurahCore(); }
+            if(loopSetting === 'inf') {
+                player.currentTime = 0;
+                player.play();
+            } else {
+                let maxRepeats = parseInt(loopSetting);
+                if(totalPlayCounter < maxRepeats) {
+                    totalPlayCounter++;
+                    player.currentTime = 0;
+                    player.play();
+                }
+            }
+        });
 
-        // --- موسوعة الأحاديث ---
+        // نظام البحث الصوتي المعمم
+        function startVoiceSearch(inputElementId, callbackSuccess) {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRec) { alert("المتصفح لا يدعم البحث الصوتي الحالي."); return; }
+            const rec = new SpeechRec();
+            rec.lang = 'ar-SA';
+            rec.onstart = () => { document.getElementById(inputElementId).placeholder = "🎙️ جاري الاستماع الحركي الآن..."; };
+            rec.onend = () => { document.getElementById(inputElementId).placeholder = "ابحث..."; };
+            rec.onresult = (e) => {
+                const spoken = e.results[0][0].transcript;
+                document.getElementById(inputElementId).value = spoken;
+                callbackSuccess(spoken);
+            };
+            rec.start();
+        }
+
+        function executeVoiceMatch(rawText) {
+            let cleanQuery = rawText.replace(/[\u064B-\u065F]/g, "").replace(/[أإآا]/g, "ا").replace(/ة/g, "ه").replace("سوره", "").trim();
+            let matched = allSurahs.find(s => s.name.includes(cleanQuery) || cleanQuery.includes(s.name));
+            if (matched) { renderSurahReader(matched.number, matched.name); }
+        }
+
+        // محرك البحث والمطابقة للأحاديث والفضائل الشاملة
         function searchVirtuesCore() {
-            const q = document.getElementById('virtueSearchInput').value.toLowerCase();
+            const query = document.getElementById('virtueSearchInput').value.trim().toLowerCase();
+            renderVirtuesGrid(query);
+        }
+
+        function executeVirtueVoiceMatch(spokenText) {
+            document.getElementById('virtueSearchInput').value = spokenText;
+            renderVirtuesGrid(spokenText.toLowerCase());
+        }
+
+        function renderVirtuesGrid(filterKey = "") {
             const container = document.getElementById('virtuesDisplayContainer');
             container.innerHTML = '';
-            
-            let filtered = virtuesDatabase.filter(v => v.topic.includes(q) || v.keywords.some(k => k.includes(q)));
-            if (filtered.length === 0) {
-                container.innerHTML = '<p>لا توجد نتائج.</p>'; return;
+
+            let filtered = virtuesDatabase;
+            if(filterKey !== "") {
+                filtered = virtuesDatabase.filter(v => 
+                    v.topic.toLowerCase().includes(filterKey) || 
+                    v.desc.toLowerCase().includes(filterKey) || 
+                    v.keywords.some(k => filterKey.includes(k) || k.includes(filterKey))
+                );
             }
-            
+
+            if(filtered.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding:20px;">لم يتم العثور على فضائل تطابق بحثك. جرب كتابة كلمة أخرى مثل (الصلاة، الوالدين، الليل)...</p>';
+                return;
+            }
+
             filtered.forEach(v => {
                 container.innerHTML += `
-                <div class="hadith-card-item">
-                    <h4><i class="fas fa-star"></i> ${v.topic}</h4>
-                    <p style="color:var(--text-muted); font-size:14px; margin-bottom:10px;">${v.desc}</p>
-                    <div class="hadith-proof">${v.proof}</div>
-                </div>`;
+                    <div class="hadith-card-item">
+                        <h4><i class="fas fa-star" style="color:var(--accent);"></i> ${v.topic}</h4>
+                        <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">${v.desc}</p>
+                        <div class="hadith-proof">
+                            <strong>الدليل الشرعي:</strong><br>${v.proof}
+                        </div>
+                    </div>
+                `;
             });
         }
 
-        // --- السبحة الإلكترونية ---
         function onTasbeehSelectChange() {
-            globalTasbeehCount = 0;
-            document.getElementById('tasbeehCounterBtn').innerText = 0;
-            const val = document.getElementById('tasbeehWordSelect').value;
-            document.getElementById('tasbeehDisplayWord').innerText = val === 'auto' ? tasbeehArr[0] : tasbeehArr[parseInt(val)];
+            const type = document.getElementById('tasbeehWordSelect').value;
+            if(type !== 'auto') {
+                document.getElementById('tasbeehDisplayWord').innerText = tasbeehArr[parseInt(type)];
+            } else {
+                updateAutoTasbeehWord();
+            }
+        }
+
+        function updateAutoTasbeehWord() {
+            let idx = Math.floor(globalTasbeehCount / 33) % tasbeehArr.length;
+            document.getElementById('tasbeehDisplayWord').innerText = tasbeehArr[idx] + " (نمط تلقائي)";
         }
 
         function incrementTasbeehCore() {
             globalTasbeehCount++;
             document.getElementById('tasbeehCounterBtn').innerText = globalTasbeehCount;
-            const val = document.getElementById('tasbeehWordSelect').value;
-            if (val === 'auto') {
-                let idx = Math.floor(globalTasbeehCount / 33) % tasbeehArr.length;
-                document.getElementById('tasbeehDisplayWord').innerText = tasbeehArr[idx];
-            }
+            if(document.getElementById('tasbeehWordSelect').value === 'auto') { updateAutoTasbeehWord(); }
         }
 
         function resetTasbeehCore() {
             globalTasbeehCount = 0;
-            document.getElementById('tasbeehCounterBtn').innerText = 0;
+            document.getElementById('tasbeehCounterBtn').innerText = "0";
             onTasbeehSelectChange();
         }
 
-        // --- الذكاء الاصطناعي ---
-        function triggerQuickAiQuestion(q) {
-            document.getElementById('chatInputField').value = q;
-            processAiCommand();
-        }
-        function handleChatKey(e) { if(e.key === 'Enter') processAiCommand(); }
-        
-        function processAiCommand() {
-            const input = document.getElementById('chatInputField');
-            const msg = input.value.trim();
-            if(!msg) return;
-            
-            const chatBox = document.getElementById('chatMessages');
-            chatBox.innerHTML += `<div class="msg user">${msg}</div>`;
-            input.value = '';
-            
-            setTimeout(() => {
-                let reply = "هذا الرد من المساعد الذكي لمساعدتك في استكشاف المنصة.";
-                if (msg.includes("صلاة") || msg.includes("قرآن") || msg.includes("والدين")) {
-                    reply = "تفضل بزيارة <button class='bot-card-btn' onclick='switchTab(\"hadith-encyclopedia\")'>موسوعة الأحاديث</button> لتقرأ عن الفضائل وتفاصيلها.";
-                } else if (msg.includes("سبحة")) {
-                    reply = "اضغط هنا للانتقال مباشرة: <button class='bot-card-btn' onclick='switchTab(\"tasbeeh\")'>تشغيل السبحة</button>";
-                }
-                chatBox.innerHTML += `<div class="msg bot">${reply}</div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 500);
+        // الذكاء الاصطناعي - تفعيل السؤال بنقرة زر جاهزة
+        function triggerQuickAiQuestion(questionText) {
+            appendChatMessage(questionText, 'user');
+            setTimeout(() => { analyzeAndExecuteAiReply(questionText); }, 300);
         }
 
-        // --- تشغيل التطبيق ---
+        function handleChatKey(e) { if(e.key === 'Enter') processAiCommand(); }
+
+        function processAiCommand() {
+            const inp = document.getElementById('chatInputField');
+            const userTxt = inp.value.trim();
+            if(!userTxt) return;
+
+            appendChatMessage(userTxt, 'user');
+            inp.value = '';
+
+            setTimeout(() => { analyzeAndExecuteAiReply(userTxt); }, 300);
+        }
+
+        function appendChatMessage(txt, sender) {
+            const box = document.getElementById('chatMessages');
+            box.innerHTML += `<div class="msg ${sender}">${txt}</div>`;
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function analyzeAndExecuteAiReply(txt) {
+            const lowText = txt.toLowerCase();
+            
+            if(lowText.includes('صلاة') || lowText.includes('الصلاة')) {
+                let htmlResponse = `
+                    <strong>فضل الصلاة وثمارها:</strong><br>
+                    الصلاة هي عماد الدين ونور المؤمن، وبها تكفر الذنوب والخطايا وتستقيم حياة العبد.<br>
+                    الدليل: قال ﷺ: «مَثَلُ الصَّلَوَاتِ الْخَمْسِ كَمَثَلِ نَهْرٍ جَارٍ غَمْرٍ...»<br>
+                    لقد قمت بإدراج الفضيلة كاملة مع أدلتها في قسم الموسوعة الجديد، يمكنك الانتقال إليه من هنا للتصفح والبحث الموسع:
+                    <br>
+                    <button class="bot-card-btn" onclick="switchTab('hadith-encyclopedia'); renderVirtuesGrid('صلاة');"><i class="fas fa-scroll"></i> تصفح فضائل الصلاة في الموسوعة</button>
+                `;
+                appendChatMessage(htmlResponse, 'bot');
+                return;
+            }
+
+            if(lowText.includes('والدين') || lowText.includes('بر')) {
+                let htmlResponse = `
+                    <strong>فضل بر الوالدين:</strong><br>
+                    طاعة الوالدين والإحسان إليهما من أحب الأعمال إلى الله عز وجل ومقرون بعبادته لتأكيد عظم شأنه.<br>
+                    الدليل قوله تعالى: ﴿وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا﴾.<br>
+                    تفضل بالانتقال إلى القسم المخصص للأحاديث والفضائل لرؤية الدليل كاملاً:
+                    <br>
+                    <button class="bot-card-btn" onclick="switchTab('hadith-encyclopedia'); renderVirtuesGrid('والدين');"><i class="fas fa-scroll"></i> فتح فضائل بر الوالدين</button>
+                `;
+                appendChatMessage(htmlResponse, 'bot');
+                return;
+            }
+
+            if(lowText.includes('استماع') || lowText.includes('تفسير') || lowText.includes('صوت')) {
+                let htmlResponse = `
+                    يمكنك الانتقال الفوري والمستقل تماماً إلى شريط التلاوات العذبة وإصدارات التدبر الفقهي لجميع الشيوخ (بمن فيهم المنشاوي والحصري بنسختهم المستقرة) من هنا:
+                    <br>
+                    <button class="bot-card-btn" onclick="switchTab('audio-tafsir')"><i class="fas fa-headphones"></i> الانتقال لغرفة الاستماع والتفسير</button>
+                `;
+                appendChatMessage(htmlResponse, 'bot');
+                return;
+            }
+
+            if(lowText.includes('مصحف') || lowText.includes('قرآن') || lowText.includes('قراءة')) {
+                let htmlResponse = `
+                    المصحف الشريف مهيأ بالكامل الآن للقراءة النظيفة وتثبيت الختمات بشكل يحاكي شكل المصحف الحقيقي والدائري تماماً، تفضل بالدخول:
+                    <br>
+                    <button class="bot-card-btn" onclick="switchTab('quran')"><i class="fas fa-book-open"></i> فتح المصحف الشريف للقراءة</button>
+                `;
+                appendChatMessage(htmlResponse, 'bot');
+                return;
+            }
+
+            if(lowText.includes('سبحة') || lowText.includes('تسبيح') || lowText.includes('عداد')) {
+                let htmlResponse = `
+                    يمكنك الانتقال الفوري إلى نظام السبحة الإلكترونية التكرارية الذكية من هنا:
+                    <br>
+                    <button class="bot-card-btn" onclick="switchTab('tasbeeh')"><i class="fas fa-fingerprint"></i> فتح السبحة الإلكترونية</button>
+                `;
+                appendChatMessage(htmlResponse, 'bot');
+                return;
+            }
+
+            let defaultResponse = `
+                أنا رفيقك التوجيهي الذكي، يرجى الضغط على أحد أزرار الخيارات السريعة المتاحة في الأعلى، أو اطلب ما تريد وسأقوم بإنشاء بطاقات تحويل فورية لك.
+            `;
+            appendChatMessage(defaultResponse, 'bot');
+        }
+
+        function initDashboardAdhkar() {
+            const container = document.getElementById('dashboardAdhkar');
+            const sampleAdhkar = [
+                "أستغفر الله العظيم وأتوب إليه (انقر للاحتساب)",
+                "اللهم صل وسلم على نبينا محمد وعلى آله وصحبه أجمعين"
+            ];
+            container.innerHTML = '';
+            sampleAdhkar.forEach((txt) => {
+                container.innerHTML += `
+                    <div class="prayer-card" style="text-align:right; cursor:pointer; padding:12px; background:rgba(255,255,255,0.01);" onclick="this.style.opacity=0.35">
+                        <p style="font-size:14px; color:var(--text-main);"><i class="fas fa-check-circle" style="color:var(--accent); margin-left:8px;"></i> ${txt}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function executeRandomRefreshWidgets() {
+            document.getElementById('sunnahHadithBox').innerText = staticHadiths[Math.floor(Math.random() * staticHadiths.length)];
+            document.getElementById('abandonedSunnahBox').innerText = staticSunnahs[Math.floor(Math.random() * staticSunnahs.length)];
+            document.getElementById('spiritualLightBox').innerText = staticLights[Math.floor(Math.random() * staticLights.length)];
+        }
+
         window.onload = () => {
             detectUserLocationAndPrayers();
-            loadDashboardData();
-            fetchQuranList();
-            searchVirtuesCore();
-            checkContinueReading();
+            initQuranDatabase();
+            initDashboardAdhkar();
+            executeRandomRefreshWidgets();
+            renderVirtuesGrid(); // تحميل قاعدة بيانات الفضائل الافتراضية
+            onTasbeehSelectChange();
         };
     </script>
 </body>
