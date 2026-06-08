@@ -131,12 +131,12 @@
         .ayah-span.active-highlight { background: rgba(251, 191, 36, 0.2); color: var(--gold); }
         .ayah-num { color: var(--gold); font-size: 20px; margin: 0 4px; font-family: 'Tajawal'; font-weight: bold; display: inline-block; }
 
-        /* Tafsir Box Panel */
-        .tafsir-panel { background: rgba(3, 7, 18, 0.6); border: 1px dashed var(--accent); border-radius: 16px; padding: 15px 20px; margin-top: 15px; }
+        /* التفسير في جزء مستقل تماماً */
+        .tafsir-card { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 20px; margin-top: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
 
-        /* Audio Control Bar */
-        .audio-bar { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 16px; margin-bottom: 20px; border: 1px solid var(--border-glass); }
-        .audio-bar select { background: #0f172a; color: white; border: 1px solid var(--border-glass); padding: 8px 12px; border-radius: 8px; font-family: Tajawal; outline: none; }
+        /* شريط الاستماع المنفصل */
+        .audio-bar { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; background: rgba(17, 24, 39, 0.7); padding: 15px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border-glass); }
+        .audio-bar select { background: #0f172a; color: white; border: 1px solid var(--border-glass); padding: 8px 12px; border-radius: 8px; font-family: Tajawal; outline: none; cursor: pointer; }
         audio { flex: 1; min-width: 250px; height: 35px; }
 
         /* Reader Navigation Buttons */
@@ -218,7 +218,7 @@
                     </div>
 
                     <div class="glass-card">
-                        <h3 style="margin-bottom: 20px; color: var(--gold); font-size: 16px;"><i class="fas fa-clock"></i> أوقات الصلاة <span id="prayerCityName">(جاري تحديد موقعك تلقائياً...)</span></h3>
+                        <h3 style="margin-bottom: 20px; color: var(--gold); font-size: 16px;"><i class="fas fa-clock"></i> أوقات الصلاة <span id="prayerCityName">(جاري تحديد الموقع...)</span></h3>
                         <div id="prayerTimesGrid" class="grid-5">
                             <div class="prayer-card"><div class="prayer-name">الفجر</div><div class="prayer-time" id="pt-Fajr">--:--</div></div>
                             <div class="prayer-card"><div class="prayer-name">الظهر</div><div class="prayer-time" id="pt-Dhuhr">--:--</div></div>
@@ -267,7 +267,7 @@
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
                     <button class="btn-primary" onclick="closeSurah()" style="background: rgba(255,255,255,0.05); color: white;"><i class="fas fa-arrow-right"></i> الفهرس</button>
                     <h2 id="currentSurahName" style="color: var(--gold);"></h2>
-                    <div style="font-size:13px; color:var(--accent); font-weight:bold;"><i class="fas fa-circle-info"></i> اضغط على أي آية لقراءة تفسيرها فوراً</div>
+                    <div style="font-size:13px; color:var(--accent); font-weight:bold;"><i class="fas fa-circle-info"></i> اضغط على أي آية لقراءة تفسيرها في الأسفل</div>
                 </div>
 
                 <div class="audio-bar">
@@ -275,9 +275,14 @@
                         <i class="fas fa-volume-high" style="color:var(--accent); margin-left:5px;"></i>
                         <select id="reciterSelect" onchange="changeReciterAudio()">
                             <option value="https://server10.mp3quran.net/jleel/">الشيخ خالد الجليل</option>
+                            <option value="https://server7.mp3quran.net/shur/">الشيخ سعود الشريم</option>
                             <option value="https://server8.mp3quran.net/afs/">الشيخ مشاري العفاسي</option>
                             <option value="https://server12.mp3quran.net/maher/">الشيخ ماهر المعيقلي</option>
-                            <option value="https://server7.mp3quran.net/basit/">الشيخ عبد الباسط (مرتل)</option>
+                            <option value="https://server10.mp3quran.net/ajm/">الشيخ أحمد العجمي</option>
+                            <option value="https://server11.mp3quran.net/yasser/">الشيخ ياسر الدوسري</option>
+                            <option value="https://server11.mp3quran.net/minsh/">الشيخ محمد الصديق المنشاوي</option>
+                            <option value="https://server13.mp3quran.net/lhusr/">الشيخ محمود خليل الحصري</option>
+                            <option value="https://server7.mp3quran.net/basit/">الشيخ عبد الباسط عبد الصمد</option>
                         </select>
                     </div>
                     <div>
@@ -296,9 +301,11 @@
                 
                 <div id="currentSurahText" class="quran-text"></div>
 
-                <div class="tafsir-panel">
-                    <div style="font-size:14px; color:var(--gold); font-weight:bold; margin-bottom:6px;"><i class="fas fa-book-open"></i> التفسير الميسر:</div>
-                    <p id="tafsirContentBox" style="font-size:15px; line-height:1.6; color:var(--text-main);">اضغط على أي آية بالأعلى ليظهر تفسيرها هنا مباشرة...</p>
+                <div class="tafsir-card">
+                    <div style="font-size:15px; color:var(--gold); font-weight:bold; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+                        <i class="fas fa-book-open"></i> <span>التفسير الميسر والتدبر</span>
+                    </div>
+                    <p id="tafsirContentBox" style="font-size:15.5px; line-height:1.7; color:#e2e8f0;">انقر على أي آية من المصحف بالأعلى ليتم عرض تفسيرها هنا بشكل مستقل...</p>
                 </div>
 
                 <div class="reader-nav">
@@ -330,14 +337,14 @@
         </section>
 
         <section id="ai-assistant" class="section">
-            <span class="subtitle">نظام الإرشاد والتوجيه الذكي والتفاعلي</span>
+            <span class="subtitle">نظام الإرشاد والتوجيه التفاعلي</span>
             <h1>مساعد رتيل الذكي</h1>
             <div class="glass-card chat-container">
                 <div class="chat-messages" id="chatMessages">
-                    <div class="msg bot">مرحباً بك يا غالي! أنا مساعدك التفاعلي الذكي. اكتب لي ما تريد وسأفهمك فوراً وأعطيك أزرار تحكم سريعة داخل الشات، مثل: "وين القرآن"، "شغل سورة الكهف"، "أوقات الصلاة"، أو "أبي أسبح".</div>
+                    <div class="msg bot">مرحباً بك! أنا مساعدك التوجيهي الشامل. يرجى كتابة استفسارك باللغة العربية الفصحى وسأقوم بتقديم الإرشاد وبطاقات الانتقال السريع فوراً، مثل: "أين المصحف الشريف"، "أريد تشغيل سورة الكهف"، "أوقات الصلاة"، أو "فتح السبحة الإلكترونية".</div>
                 </div>
                 <div class="chat-input-area">
-                    <input type="text" id="chatInputField" class="chat-input" placeholder="اكتب سؤالك أو أمر التوجيه هنا..." onkeypress="handleChatKey(event)">
+                    <input type="text" id="chatInputField" class="chat-input" placeholder="اكتب سؤالك باللغة العربية الفصحى هنا..." onkeypress="handleChatKey(event)">
                     <button class="btn-primary" onclick="processAiCommand()"><i class="fas fa-paper-plane"></i> إرسال</button>
                 </div>
             </div>
@@ -346,7 +353,6 @@
     </main>
 
     <script>
-        // المتغيرات والمصفوفات العامة
         let allSurahs = [];
         let currentLoadedSurahNum = 0;
         let currentLoadedSurahName = "";
@@ -356,43 +362,35 @@
         
         const tasbeehArr = ["سُبْحَانَ اللَّهِ", "الْحَمْدُ لِلَّهِ", "لَا إِلَهَ إِلَّا اللَّهُ", "اللَّهُ أَكْبَرُ", "أَسْتَغْفِرُ اللَّهَ العَظِيمَ"];
 
-        // مصفوفات البيانات الخاصة بالريفريش العشوائي لصفحة الرئيسية
         const staticHadiths = [
             "قال رسول الله ﷺ: «من سلك طريقاً يلتمس فيه علماً، سهل الله له به طريقاً إلى الجنة» (رواه مسلم).",
             "قال رسول الله ﷺ: «كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن: سبحان الله وبحمده، سبحان الله العظيم» (متفق عليه).",
             "قال رسول الله ﷺ: «خيركم من تعلم القرآن وعلمه» (رواه البخاري).",
-            "قال رسول الله ﷺ: «من قرأ حرفًا من كتاب الله فله به حسنة، والحسنة بعشر أمثالها» (رواه الترمذي).",
-            "قال رسول الله ﷺ: «احفظ الله يحفظك، احفظ الله تجده تجاهك» (رواه الترمذي)."
+            "قال رسول الله ﷺ: «من قرأ حرفًا من كتاب الله فله به حسنة، والحسنة بعشر أمثالها» (رواه الترمذي)."
         ];
 
         const staticSunnahs = [
             "التكبير عند صعود المرتفعات والدرج، والتسبيح عند النزول والانحدار.",
             "قراءة سورة الملك قبل النوم فإنها المنجية من عذاب القبر.",
             "الوضوء قبل الذهاب إلى الفراش ونفض الفراش ثلاثاً.",
-            "السواك وتطهير الفم عند دخول المنزل وعند القيام للصلاة.",
-            "ابتداء لبس الحذاء بالرجل اليمنى، وخلعه بالرجل اليسرى."
+            "السواك وتطهير الفم عند دخول المنزل وعند القيام للصلاة."
         ];
 
         const staticLights = [
             "تدبر آية واحدة من كتاب الله بتأمل وفهم، خير للقلب وأنفع له من قراءة ختمة كاملة بلا وعي.",
             "إذا أردت أن يكلمك الله فاقرأ القرآن، وإذا أردت أن تكلم الله فقم إلى الصلاة.",
-            "عش حياتك متوكلاً، واذكر ربك في الرخاء والشدة، تجد أبواب التيسير تفتح أمامك تباعاً.",
-            "الاستغفار يفتح الأقفال، ويشرح البال، ويكثر الأموال، ويصلح الحال.",
-            "كلما زاد اتصالك بالقرآن تدبراً وسماعاً، كلما انزاح عن صدرك ثقل الهموم والأحزان."
+            "الاستغفار يفتح الأقفال، ويشرح البال، ويكثر الأموال، ويصلح الحال."
         ];
 
-        // تبديل الأقسام والتابات الرئيسية
         function switchTab(tabId) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(nav => nav.className = 'nav-item');
-            
             document.getElementById(tabId).classList.add('active');
             
             const icons = { 'dashboard':0, 'quran':1, 'tasbeeh':2, 'ai-assistant':3 };
             document.querySelectorAll('.nav-item')[icons[tabId]].className = 'nav-item active';
         }
 
-        // ================= 1. أوقات الصلاة والتعرف الجغرافي تلقائياً =================
         async function detectUserLocationAndPrayers() {
             try {
                 const ipRes = await fetch('https://ipapi.co/json/');
@@ -417,7 +415,7 @@
                 document.getElementById('pt-Asr').innerText = convertTo12Hour(t.Asr);
                 document.getElementById('pt-Maghrib').innerText = convertTo12Hour(t.Maghrib);
                 document.getElementById('pt-Isha').innerText = convertTo12Hour(t.Isha);
-            } catch(e) { console.log("خطأ استدعاء الـ API الخاص بالأوقات"); }
+            } catch(e) { console.log("خطأ استدعاء أوقات الصلاة"); }
         }
 
         function convertTo12Hour(t24) {
@@ -427,7 +425,6 @@
             return `${h}:${m} ${period}`;
         }
 
-        // ================= 2. الفهرس والقارئ والبسملة والتفسير الميسر =================
         async function initQuranDatabase() {
             try {
                 const res = await fetch('https://api.alquran.cloud/v1/surah');
@@ -463,7 +460,6 @@
             currentLoadedSurahNum = num;
             currentLoadedSurahName = name;
             
-            // حفظ التقدم الحالي في المتصفح المحلي
             localStorage.setItem('lastReadSurahNum', num);
             localStorage.setItem('lastReadSurahName', name);
             checkLastSavedBookmark();
@@ -474,18 +470,15 @@
             
             const txtContainer = document.getElementById('currentSurahText');
             const tafsirDisplay = document.getElementById('tafsirContentBox');
-            txtContainer.innerHTML = 'جاري تحميل الآيات العثمانية والتفسير الميسر...';
-            tafsirDisplay.innerText = "اضغط على أي آية بالأعلى ليظهر تفسيرها هنا مباشرة...";
+            txtContainer.innerHTML = 'جاري تحميل الآيات الكريمة...';
+            tafsirDisplay.innerText = "انقر على أي آية من المصحف بالأعلى ليتم عرض تفسيرها هنا بشكل مستقل...";
 
-            // تحديث حالة أزرار التالي والسابق لمنع الخطأ البرمجي
             document.getElementById('prevSurahBtn').style.opacity = (num === 1) ? "0.3" : "1";
             document.getElementById('nextSurahBtn').style.opacity = (num === 114) ? "0.3" : "1";
 
-            // تحميل مشغل الصوت تلقائياً للسورة الحالية
             changeReciterAudio();
 
             try {
-                // جلب نص القرآن الكريم العثماني والتفسير الميسر بالتوازي لتوفير الوقت وسرعة الأداء
                 const [quranRes, tafsirRes] = await Promise.all([
                     fetch(`https://api.alquran.cloud/v1/surah/${num}/quran-uthmani`),
                     fetch(`https://api.alquran.cloud/v1/surah/${num}/ar.muyassar`)
@@ -497,7 +490,6 @@
                 currentSurahTafsirArray = tafsirData.data.ayahs;
                 txtContainer.innerHTML = '';
 
-                // معالجة وحل مشكلة البسملة المتكررة
                 if(num !== 1 && num !== 9) {
                     document.getElementById('surahBasmalaSlot').innerText = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
                     document.getElementById('surahBasmalaSlot').style.display = "block";
@@ -508,8 +500,6 @@
                 let processedHtml = '';
                 quranData.data.ayahs.forEach((a, index) => {
                     let ayahString = a.text;
-
-                    // إزالة تكرار البسملة المدمجة في مصفوفة الآية الأولى برمجياً
                     if (a.numberInSurah === 1 && num !== 1 && num !== 9) {
                         if (ayahString.startsWith("بِسْمِ")) {
                             let words = ayahString.split(" ");
@@ -518,17 +508,15 @@
                             }
                         }
                     }
-
                     processedHtml += `<span class="ayah-span" id="ayah-item-${index}" onclick="showAyahTafsir(${index})">${ayahString} <span class="ayah-num">﴾${a.numberInSurah}﴿</span></span> `;
                 });
                 
                 txtContainer.innerHTML = processedHtml;
             } catch (e) {
-                txtContainer.innerHTML = 'حدث خلل أثناء جلب مصفوفة السورة، يرجى التحقق من اتصال الإنترنت.';
+                txtContainer.innerHTML = 'حدث خلل أثناء تحميل الآيات، يرجى التحقق من الاتصال بالإنترنت.';
             }
         }
 
-        // دالة إظهار التفسير الميسر عند الضغط على الآية
         function showAyahTafsir(index) {
             document.querySelectorAll('.ayah-span').forEach(el => el.classList.remove('active-highlight'));
             document.getElementById(`ayah-item-${index}`).classList.add('active-highlight');
@@ -538,7 +526,6 @@
             }
         }
 
-        // التنقل بين السور (السابق والتالي)
         function navigateSurah(direction) {
             let targetSurah = currentLoadedSurahNum + direction;
             if(targetSurah >= 1 && targetSurah <= 114) {
@@ -550,13 +537,11 @@
         }
 
         function closeSurah() {
-            // إيقاف الصوت عند الخروج للفهرس منعاً للإزعاج
             document.getElementById('quranAudioPlayer').pause();
             document.getElementById('quranReader').style.display = 'none';
             document.getElementById('quranIndex').style.display = 'block';
         }
 
-        // التحقق وإظهار كارت استكمال القراءة بالصفحة الرئيسية
         function checkLastSavedBookmark() {
             let savedNum = localStorage.getItem('lastReadSurahNum');
             let savedName = localStorage.getItem('lastReadSurahName');
@@ -578,23 +563,18 @@
             }
         }
 
-        // ================= 3. إدارة مشغل الصوت والربط بالشيوخ مع التكرار =================
         function changeReciterAudio() {
             if(currentLoadedSurahNum === 0) return;
-            
             const baseServer = document.getElementById('reciterSelect').value;
-            // تنسيق رقم السورة ليصبح بثلاث خانات (مثل: 001, 023, 114) ليتوافق مع خوادم البث المباشر
             const formattedNum = String(currentLoadedSurahNum).padStart(3, '0');
             const targetAudioUrl = `${baseServer}${formattedNum}.mp3`;
             
             const player = document.getElementById('quranAudioPlayer');
             player.src = targetAudioUrl;
             player.load();
-            
-            totalPlayCounter = 1; // تصفير عداد التكرار الداخلي عند تغيير السورة
+            totalPlayCounter = 1;
         }
 
-        // ربط منطق التكرار الذكي عند انتهاء المقطع الصوتي
         document.getElementById('quranAudioPlayer').addEventListener('ended', () => {
             const player = document.getElementById('quranAudioPlayer');
             const loopSetting = document.getElementById('audioRepeatSelect').value;
@@ -608,22 +588,19 @@
                     totalPlayCounter++;
                     player.currentTime = 0;
                     player.play();
-                } else {
-                    console.log("اكتملت عدد مرات التكرار المطلوبة بنجاح.");
                 }
             }
         });
 
-        // ================= 4. محرك البحث الصوتي الذكي الاحتياطي =================
         function startVoiceSearch() {
             const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRec) {
-                alert("المتصفح لا يدعم البحث الصوتي الحركي، يرجى الكتابة يدوياً.");
+                alert("المتصفح لا يدعم البحث الصوتي، يرجى الكتابة يدوياً.");
                 return;
             }
             const rec = new SpeechRec();
             rec.lang = 'ar-SA';
-            rec.onstart = () => { document.getElementById('surahSearch').placeholder = "🎙️ جاري الاستماع الحركي... تحدث الآن"; };
+            rec.onstart = () => { document.getElementById('surahSearch').placeholder = "🎙️ جاري الاستماع... تحدث الآن"; };
             rec.onend = () => { document.getElementById('surahSearch').placeholder = "ابحث عن سورة بالاسم..."; };
             rec.onresult = (e) => {
                 const spoken = e.results[0][0].transcript;
@@ -641,7 +618,6 @@
             }
         }
 
-        // ================= 5. السبحة الإلكترونية التلقائية والمخصصة =================
         function onTasbeehSelectChange() {
             const type = document.getElementById('tasbeehWordSelect').value;
             if(type !== 'auto') {
@@ -653,7 +629,7 @@
 
         function updateAutoTasbeehWord() {
             let idx = Math.floor(globalTasbeehCount / 33) % tasbeehArr.length;
-            document.getElementById('tasbeehDisplayWord').innerText = tasbeehArr[idx] + " (نمط تلقائي ذكي)";
+            document.getElementById('tasbeehDisplayWord').innerText = tasbeehArr[idx] + " (نمط تلقائي)";
         }
 
         function incrementTasbeehCore() {
@@ -670,7 +646,6 @@
             onTasbeehSelectChange();
         }
 
-        // ================= 6. المساعد التفاعلي الخارق والبطاقات القابلة للنقر =================
         function handleChatKey(e) { if(e.key === 'Enter') processAiCommand(); }
 
         function processAiCommand() {
@@ -683,7 +658,7 @@
 
             setTimeout(() => {
                 analyzeAndExecuteAiReply(userTxt);
-            }, 350);
+            }, 300);
         }
 
         function appendChatMessage(txt, sender) {
@@ -694,9 +669,8 @@
 
         function analyzeAndExecuteAiReply(txt) {
             const lowText = txt.toLowerCase();
-            
-            // الفحص والتحقق الذكي إذا طلب المستخدم فتح سورة معينة بالاسم صراحة داخل الشات
             let targetSurahObject = null;
+            
             if(allSurahs.length > 0) {
                 for(let s of allSurahs) {
                     if(lowText.includes(s.name)) {
@@ -708,29 +682,27 @@
 
             if(targetSurahObject) {
                 let htmlResponse = `
-                    أبشر يا غالي، فهمت طلبك! وجدت أنك تبحث عن **سورة ${targetSurahObject.name}**. يمكنك الانتقال وفتحها والاستماع إليها مباشرة من خلال الزر التفاعلي بالأسفل:
+                    لقد عثرت على **سورة ${targetSurahObject.name}** بناءً على طلبك. يمكنك الانتقال إليها وتفعيل الاستماع والتفسير مباشرة عبر الزر أدناه:
                     <br>
-                    <button class="bot-card-btn" onclick="switchTab('quran'); renderSurahReader(${targetSurahObject.number}, '${targetSurahObject.name}');"><i class="fas fa-book-open"></i> افتح سورة ${targetSurahObject.name} الآن</button>
+                    <button class="bot-card-btn" onclick="switchTab('quran'); renderSurahReader(${targetSurahObject.number}, '${targetSurahObject.name}');"><i class="fas fa-book-open"></i> فتح سورة ${targetSurahObject.name}</button>
                 `;
                 appendChatMessage(htmlResponse, 'bot');
                 return;
             }
 
-            // تتبع كلمات مفتاحية عن القرآن والمصحف
-            if(lowText.includes('قران') || lowText.includes('المصحف') || lowText.includes('ايات') || lowText.includes('اقرا')) {
+            if(lowText.includes('مصحف') || lowText.includes('قرآن') || lowText.includes('تلاوة') || lowText.includes('قراءة')) {
                 let htmlResponse = `
-                    المصحف الشريف كامل بالرسم العثماني متوفر في المنصة ومزود بتلاوة فخرية للشيخ خالد الجليل وتفسير فوري! اضغط على الزر أدناه للانتقال السريع:
+                    المصحف الشريف متوفر بالكامل بالرسم العثماني ومزود بقائمة موسعة من كبار المقرئين. اضغط هنا للانتقال:
                     <br>
-                    <button class="bot-card-btn" onclick="switchTab('quran')"><i class="fas fa-book-open"></i> الذهاب للمصحف الشريف</button>
+                    <button class="bot-card-btn" onclick="switchTab('quran')"><i class="fas fa-book-open"></i> الانتقال إلى المصحف الشريف</button>
                 `;
                 appendChatMessage(htmlResponse, 'bot');
                 return;
             }
 
-            // تتبع كلمات الاستغفار والسبحة
-            if(lowText.includes('سبحه') || lowText.includes('اسبح') || lowText.includes('استغفر') || lowText.includes('اذكار') || lowText.includes('تسبیح')) {
+            if(lowText.includes('سبحة') || lowText.includes('تسبيح') || lowText.includes('استغفار') || lowText.includes('أذكر')) {
                 let htmlResponse = `
-                    تم تجهيز لوحة السبحة الإلكترونية الذكية بنظام التحويل التلقائي الذكي كل 33 تسبيحة لمساعدتك على الأوراد. اضغط هنا للبدء:
+                    يمكنك الانتقال إلى لوحة التحكم الخاصة بالسبحة الإلكترونية ومتابعة أورادك اليومية عبر الرابط التفاعلي التالي:
                     <br>
                     <button class="bot-card-btn" onclick="switchTab('tasbeeh')"><i class="fas fa-fingerprint"></i> فتح السبحة الإلكترونية</button>
                 `;
@@ -738,34 +710,31 @@
                 return;
             }
 
-            // تتبع الكلمات الخاصة بالصلاة واللوحة الرئيسية
-            if(lowText.includes('صلاه') || lowText.includes('وقت') || lowText.includes('اذان') || lowText.includes('الرئيسيه') || lowText.includes('موقع')) {
+            if(lowText.includes('صلاة') || lowText.includes('أذان') || lowText.includes('مواقيت') || lowText.includes('الرئيسية')) {
                 let htmlResponse = `
-                    أبشر، أوقات الصلاة والصلوات الخمس محدثة جغرافياً بناءً على موقع شبكتك الحالي. اضغط للعودة إلى اللوحة الرئيسية:
+                    مواقيت الصلوات الخمس ومتابعة الأذكار اليومية متوفرة في اللوحة الرئيسية للمنصة:
                     <br>
-                    <button class="bot-card-btn" onclick="switchTab('dashboard')"><i class="fas fa-home"></i> العودة للرئيسية</button>
+                    <button class="bot-card-btn" onclick="switchTab('dashboard')"><i class="fas fa-home"></i> العودة إلى اللوحة الرئيسية</button>
                 `;
                 appendChatMessage(htmlResponse, 'bot');
                 return;
             }
 
-            // الرد الذكي المساعد الافتراضي في حال عدم وجود كلمة دلالية مباشرة
             let defaultResponse = `
-                أنا مساعدك التوجيهي الذكي بالكامل، قمت بترقية فهمي لخدمتك! يمكنك كتابة عبارات مرنة وسأعطيك بطاقة انتقال ذكية فوراً، مثل:
+                أنا مساعدك التوجيهي، يرجى صياغة طلبك باللغة العربية الفصحى لأتمكن من توفير بطاقات الانتقال السريع لك بدقة، مثل:
                 <br>
-                • "أبي أقرأ القرآن" <br>
-                • "شغل سورة الكهف" <br>
-                • "وين السبحة" <br>
-                • "كم باقي على الأذان"
+                • "أين المصحف الشريف" <br>
+                • "أريد تشغيل سورة الكهف" <br>
+                • "فتح السبحة الإلكترونية" <br>
+                • "عرض مواقيت الصلاة"
             `;
             appendChatMessage(defaultResponse, 'bot');
         }
 
-        // ================= 7. عينات لوحة التحكم التفاعلية والريفريش العشوائي =================
         function initDashboardAdhkar() {
             const container = document.getElementById('dashboardAdhkar');
             const sampleAdhkar = [
-                "أستغفر الله العظيم وأتوب إليه (انقر للاحتساب السريع)",
+                "أستغفر الله العظيم وأتوب إليه (انقر للاحتساب)",
                 "اللهم صل وسلم على نبينا محمد وعلى آله وصحبه أجمعين"
             ];
             container.innerHTML = '';
@@ -778,10 +747,9 @@
             });
         }
 
-        // خوارزمية الاختيار العشوائي الفخم عند كل ريفريش كامل للمنصة
         function executeRandomRefreshWidgets() {
             const randomHadith = staticHadiths[Math.floor(Math.random() * staticHadiths.length)];
-            const randomSunnah = staticSunns = staticSunnahs[Math.floor(Math.random() * staticSunnahs.length)];
+            const randomSunnah = staticSunnahs[Math.floor(Math.random() * staticSunnahs.length)];
             const randomLight = staticLights[Math.floor(Math.random() * staticLights.length)];
 
             document.getElementById('sunnahHadithBox').innerText = randomHadith;
@@ -789,7 +757,6 @@
             document.getElementById('spiritualLightBox').innerText = randomLight;
         }
 
-        // إقلاع وتشغيل البنية التحتية البرمجية عند تحميل المنصة فوراً
         window.onload = () => {
             detectUserLocationAndPrayers();
             initQuranDatabase();
