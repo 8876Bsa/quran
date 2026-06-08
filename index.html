@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة رتّيل الشاملة | النسخة النهائية المستقرة</title>
+    <title>منصة رتّيل الشاملة | النسخة النهائية الاحترافية</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -45,12 +45,12 @@
             z-index: 100;
         }
 
-        .logo { font-size: 28px; color: var(--gold); margin-bottom: 40px; text-decoration: none; font-weight: 800; text-shadow: 0 0 10px rgba(251,191,36,0.3); }
+        .logo { font-size: 28px; color: var(--gold); margin-bottom: 50px; text-decoration: none; font-weight: 800; text-shadow: 0 0 10px rgba(251,191,36,0.3); }
         
         .nav-item {
             width: 55px; height: 55px;
             display: flex; justify-content: center; align-items: center;
-            border-radius: 18px; margin-bottom: 15px;
+            border-radius: 18px; margin-bottom: 20px;
             color: var(--text-muted); cursor: pointer; font-size: 22px;
             position: relative;
         }
@@ -114,40 +114,32 @@
             font-family: 'Amiri Quran', serif; font-size: 26px; line-height: 2.5;
             text-align: justify; text-align-last: center; color: #f1f5f9; background: #030712;
             padding: 40px; border-radius: 24px; border: 1px solid var(--border-glass);
-            max-height: 400px; overflow-y: auto; margin-bottom: 20px;
+            max-height: 500px; overflow-y: auto; margin-bottom: 20px;
         }
-        
-        /* علامة نهاية الآية المحاكية للمصحف الحقيقي */
-        .ayah-node {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            border: 2px solid var(--gold);
-            border-radius: 50%;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--gold);
-            margin: 0 6px;
-            vertical-align: middle;
-            background: rgba(251, 191, 36, 0.05);
-            box-shadow: 0 0 5px rgba(251, 191, 36, 0.2);
-        }
-
         .ayah-span { cursor: pointer; padding: 2px 4px; border-radius: 6px; display: inline; }
         .ayah-span:hover { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
-        .ayah-span.active-highlight { background: rgba(251, 191, 36, 0.2); color: var(--gold); }
         
-        /* التفسير والمشغل */
-        .tafsir-card { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 20px; margin-top: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        .ayah-node {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; border: 2px solid var(--gold); border-radius: 50%;
+            font-family: 'Tajawal', sans-serif; font-size: 11px; font-weight: 700;
+            color: var(--gold); margin: 0 6px; vertical-align: middle;
+            background: rgba(251, 191, 36, 0.05); box-shadow: 0 0 5px rgba(251, 191, 36, 0.2);
+        }
+
+        /* Audio & Tafsir */
+        .tafsir-card { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 20px; margin-top: 25px; }
         .audio-bar { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; background: rgba(17, 24, 39, 0.7); padding: 15px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border-glass); }
-        .audio-bar select { background: #0f172a; color: white; border: 1px solid var(--border-glass); padding: 8px 12px; border-radius: 8px; font-family: Tajawal; outline: none; cursor: pointer; }
+        .audio-bar select { background: #0f172a; color: white; border: 1px solid var(--border-glass); padding: 8px 12px; border-radius: 8px; font-family: Tajawal; outline: none; }
         audio { flex: 1; min-width: 250px; height: 35px; }
         .reader-nav { display: flex; justify-content: space-between; margin-top: 20px; gap: 15px; }
 
-        /* Tasbeeh Counter */
+        /* Buttons & Inputs */
+        .btn-primary { background: var(--accent); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .chat-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 12px; padding: 14px; color: white; outline: none; font-family: Tajawal; width: 100%; }
+        
+        /* Tasbeeh */
         .tasbeeh-container { text-align: center; padding: 30px 0; }
         .tasbeeh-btn {
             width: 190px; height: 190px; border-radius: 50%;
@@ -158,7 +150,375 @@
             margin: 0 auto 25px auto; box-shadow: 0 15px 35px rgba(16, 185, 129, 0.25);
             user-select: none;
         }
-        .select-input {
-            background: rgba(0,0,0,0.3); color: white; border: 1px solid var(--border-glass);
-            padding: 12px 20px; border-radius: 12px; font-size: 15px; font-family: Tajawal;
-            width: 100%; max-width: 300px; margin-
+        .tasbeeh-btn:active { transform: scale(0.96); }
+        
+        /* Form & Misc */
+        .select-input { background: rgba(0,0,0,0.3); color: white; border: 1px solid var(--border-glass); padding: 12px 20px; border-radius: 12px; font-size: 15px; font-family: Tajawal; width: 100%; outline: none; }
+        .hadith-result-container { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; max-height: 400px; overflow-y: auto; }
+        .hadith-card-item { background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 16px; padding: 20px; }
+        .hadith-card-item h4 { color: var(--gold); font-size: 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .hadith-proof { border-right: 3px solid var(--accent); padding-right: 12px; margin-top: 10px; font-family: 'Amiri Quran', serif; font-size: 18px; color: #cbd5e1; line-height: 1.8; }
+
+        @media (max-width: 1024px) {
+            body { flex-direction: column; overflow: auto; }
+            .sidebar { width: 100%; height: 70px; flex-direction: row; justify-content: space-around; bottom: 0; top: auto; padding: 0; z-index: 1000; }
+            .logo { display: none; }
+            .nav-item { margin: 0; }
+            .main-content { margin-right: 0; margin-bottom: 70px; padding: 20px; height: auto; }
+            .dashboard-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <a href="#" class="logo">رِ</a>
+        <div class="nav-item active" onclick="switchTab('dashboard')" title="الرئيسية"><i class="fas fa-home"></i></div>
+        <div class="nav-item" onclick="switchTab('quran')" title="المصحف للقراءة"><i class="fas fa-book-open"></i></div>
+        <div class="nav-item" onclick="switchTab('audio-tafsir')" title="الاستماع والتفسير"><i class="fas fa-headphones"></i></div>
+        <div class="nav-item" onclick="switchTab('hadith-encyclopedia')" title="موسوعة الأحاديث والفضائل"><i class="fas fa-scroll"></i></div>
+        <div class="nav-item" onclick="switchTab('tasbeeh')" title="السبحة والعدادات"><i class="fas fa-fingerprint"></i></div>
+        <div class="nav-item" onclick="switchTab('suggestions')" title="تقديم اقتراح"><i class="fas fa-lightbulb"></i></div>
+    </nav>
+
+    <main class="main-content">
+        
+        <section id="dashboard" class="section active">
+            <span class="subtitle">نظام رتيل الموحد</span>
+            <h1>الرئيسية</h1>
+            
+            <div class="dashboard-layout">
+                <div class="dashboard-main-panel">
+                    <div class="glass-card">
+                        <h3 style="margin-bottom: 20px; color: var(--gold); font-size: 16px;"><i class="fas fa-clock"></i> أوقات الصلاة <span id="prayerCityName">(جاري تحديد الموقع...)</span></h3>
+                        <div id="prayerTimesGrid" class="grid-5">
+                            <div class="prayer-card"><div class="prayer-name">الفجر</div><div class="prayer-time" id="pt-Fajr">--:--</div></div>
+                            <div class="prayer-card"><div class="prayer-name">الظهر</div><div class="prayer-time" id="pt-Dhuhr">--:--</div></div>
+                            <div class="prayer-card"><div class="prayer-name">العصر</div><div class="prayer-time" id="pt-Asr">--:--</div></div>
+                            <div class="prayer-card"><div class="prayer-name">المغرب</div><div class="prayer-time" id="pt-Maghrib">--:--</div></div>
+                            <div class="prayer-card"><div class="prayer-name">العشاء</div><div class="prayer-time" id="pt-Isha">--:--</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-widgets">
+                    <div class="glass-card">
+                        <div class="widget-title"><i class="fas fa-book" style="color: var(--accent);"></i> <span>حديث اليوم</span></div>
+                        <p class="widget-text" id="sunnahHadithBox">قال رسول الله ﷺ: «خيركم من تعلم القرآن وعلمه».</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quran" class="section">
+            <span class="subtitle">المصحف الشريف بالرسم العثماني</span>
+            <h1>القرآن الكريم للقراءة</h1>
+            
+            <div id="quranIndex">
+                <div style="margin-bottom: 20px;">
+                    <input type="text" id="surahSearch" class="chat-input" placeholder="ابحث عن سورة..." oninput="filterSurahs()">
+                </div>
+                <div id="surahsGrid" class="surah-grid"></div>
+            </div>
+
+            <div id="quranReader">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <button class="btn-primary" onclick="closeSurah()"><i class="fas fa-arrow-right"></i> الفهرس</button>
+                    <h2 id="currentSurahName" style="color: var(--gold);"></h2>
+                </div>
+                <div id="surahBasmalaSlot" class="basmala-header">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+                <div id="currentSurahText" class="quran-text">جاري تحميل الآيات...</div>
+            </div>
+        </section>
+
+        <section id="audio-tafsir" class="section">
+            <span class="subtitle">الاستماع الصوتي المباشر</span>
+            <h1>الاستماع والتفسير</h1>
+
+            <div class="glass-card">
+                <label style="display:block; margin-bottom:10px; font-size:14px; color:var(--text-muted);">اختر السورة للاستماع:</label>
+                <select id="audioTafsirSurahSelect" class="select-input" onchange="loadAudioTafsirSurahCore()"></select>
+            </div>
+
+            <div class="audio-bar">
+                <div>
+                    <i class="fas fa-volume-high" style="color:var(--accent); margin-left:5px;"></i>
+                    <select id="reciterSelect" onchange="loadAudioTafsirSurahCore()">
+                        <option value="https://server11.mp3quran.net/minsh/">الشيخ محمد الصديق المنشاوي</option>
+                        <option value="https://server13.mp3quran.net/husr/">الشيخ محمود خليل الحصري</option>
+                        <option value="https://server7.mp3quran.net/basit/">الشيخ عبد الباسط عبد الصمد</option>
+                        <option value="https://server8.mp3quran.net/afs/">الشيخ مشاري العفاسي</option>
+                        <option value="https://server12.mp3quran.net/maher/">الشيخ ماهر المعيقلي</option>
+                        <option value="https://server11.mp3quran.net/yasser/">الشيخ ياسر الدوسري</option>
+                        <option value="https://server10.mp3quran.net/jleel/">الشيخ خالد الجليل</option>
+                    </select>
+                </div>
+                <audio id="quranAudioPlayer" controls></audio>
+            </div>
+            
+            <div class="tafsir-card">
+                <div style="font-size:15px; color:var(--gold); font-weight:bold; margin-bottom:8px;"><i class="fas fa-book-open"></i> التفسير الميسر</div>
+                <p id="tafsirContentBox" style="font-size:15.5px; line-height:1.7; color:#e2e8f0;">سيتم عرض التفسير هنا قريباً عند ربطه بالآيات.</p>
+            </div>
+        </section>
+
+        <section id="hadith-encyclopedia" class="section">
+            <span class="subtitle">كنوز السنة والترغيب</span>
+            <h1>موسوعة الفضائل</h1>
+            
+            <div class="glass-card">
+                <input type="text" id="virtueSearchInput" class="chat-input" placeholder="اكتب الفضيلة (مثال: الصلاة، بر الوالدين)..." oninput="searchVirtuesCore()">
+                <div class="hadith-result-container" id="virtuesDisplayContainer"></div>
+            </div>
+        </section>
+
+        <section id="tasbeeh" class="section">
+            <span class="subtitle">الذكر المضاعف</span>
+            <h1>السبحة الإلكترونية</h1>
+            <div class="glass-card tasbeeh-container">
+                <div id="tasbeehDisplayWord" style="font-size: 26px; margin-bottom: 25px; color: var(--gold); font-weight: bold;">سُبْحَانَ اللَّهِ</div>
+                <div class="tasbeeh-btn" id="tasbeehCounterBtn" onclick="incrementTasbeeh()">0</div>
+                <button class="btn-primary" onclick="resetTasbeeh()" style="background: #ef4444;"><i class="fas fa-rotate-left"></i> تصفير العداد</button>
+            </div>
+        </section>
+
+        <section id="suggestions" class="section">
+            <span class="subtitle">تواصل معنا</span>
+            <h1>تقديم اقتراح للإدارة</h1>
+            <div class="glass-card">
+                <p style="margin-bottom: 20px; color: var(--text-muted); line-height: 1.6;">هل لديك فكرة لتحسين المنصة؟ أو واجهتك مشكلة؟ اكتب اقتراحك بالأسفل وسيتم إرساله مباشرة وبسرية تامة إلى إدارة الموقع لدراسته.</p>
+                <textarea id="suggestionText" class="chat-input" rows="5" placeholder="اكتب اقتراحك هنا بكل تفصيل..." style="resize: vertical; margin-bottom: 20px;"></textarea>
+                <button class="btn-primary" onclick="sendDiscordSuggestion()"><i class="fas fa-paper-plane"></i> إرسال الاقتراح السري</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // 1. Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            
+            const tabIds = ['dashboard', 'quran', 'audio-tafsir', 'hadith-encyclopedia', 'tasbeeh', 'suggestions'];
+            const index = tabIds.indexOf(tabId);
+            if(index !== -1) document.querySelectorAll('.nav-item')[index].classList.add('active');
+        }
+
+        // 2. Prayer Times (Fallback to Tanomah as requested previously for your location)
+        async function detectUserLocationAndPrayers() {
+            try {
+                const ipRes = await fetch('https://ipapi.co/json/');
+                const ipData = await ipRes.json();
+                const city = ipData.city || 'Tanomah';
+                const country = ipData.country_name || 'Saudi Arabia';
+                document.getElementById('prayerCityName').innerText = `(${city})`;
+                executePrayerFetch(city, country);
+            } catch {
+                document.getElementById('prayerCityName').innerText = `(تنومة)`;
+                executePrayerFetch('Tanomah', 'Saudi Arabia');
+            }
+        }
+
+        async function executePrayerFetch(city, country) {
+            try {
+                const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}&method=4`);
+                const data = await res.json();
+                const t = data.data.timings;
+                
+                const formatTime = (time) => {
+                    let [h, m] = time.split(':');
+                    let ampm = h >= 12 ? 'م' : 'ص';
+                    h = h % 12 || 12;
+                    return `${h}:${m} ${ampm}`;
+                };
+
+                document.getElementById('pt-Fajr').innerText = formatTime(t.Fajr);
+                document.getElementById('pt-Dhuhr').innerText = formatTime(t.Dhuhr);
+                document.getElementById('pt-Asr').innerText = formatTime(t.Asr);
+                document.getElementById('pt-Maghrib').innerText = formatTime(t.Maghrib);
+                document.getElementById('pt-Isha').innerText = formatTime(t.Isha);
+            } catch (e) {
+                console.log("Error fetching prayers", e);
+            }
+        }
+
+        // 3. Quran Fetching
+        let allSurahs = [];
+        async function loadSurahList() {
+            try {
+                const res = await fetch('https://api.alquran.cloud/v1/meta');
+                const data = await res.json();
+                allSurahs = data.data.surahs.references;
+                renderSurahs(allSurahs);
+                
+                // Populate Audio Select
+                const audioSelect = document.getElementById('audioTafsirSurahSelect');
+                allSurahs.forEach(s => {
+                    let opt = document.createElement('option');
+                    opt.value = s.number;
+                    opt.text = `${s.number}. سورة ${s.name}`;
+                    audioSelect.appendChild(opt);
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        function renderSurahs(surahs) {
+            const grid = document.getElementById('surahsGrid');
+            grid.innerHTML = '';
+            surahs.forEach(s => {
+                grid.innerHTML += `
+                    <div class="surah-btn" onclick="openSurah(${s.number}, '${s.name}')">
+                        <span>سورة ${s.name}</span>
+                        <div class="surah-num">${s.number}</div>
+                    </div>`;
+            });
+        }
+
+        function filterSurahs() {
+            const q = document.getElementById('surahSearch').value;
+            renderSurahs(allSurahs.filter(s => s.name.includes(q)));
+        }
+
+        async function openSurah(num, name) {
+            document.getElementById('quranIndex').style.display = 'none';
+            document.getElementById('quranReader').style.display = 'block';
+            document.getElementById('currentSurahName').innerText = `سورة ${name}`;
+            document.getElementById('surahBasmalaSlot').style.display = (num === 1 || num === 9) ? 'none' : 'block';
+            
+            const textContainer = document.getElementById('currentSurahText');
+            textContainer.innerHTML = 'جاري التحميل...';
+            
+            try {
+                const res = await fetch(`https://api.alquran.cloud/v1/surah/${num}/quran-uthmani`);
+                const data = await res.json();
+                let html = '';
+                data.data.ayahs.forEach(a => {
+                    let text = a.text;
+                    if(num !== 1 && num !== 9 && a.numberInSurah === 1) {
+                        text = text.replace('بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', '').trim();
+                    }
+                    html += `<span class="ayah-span">${text}</span><span class="ayah-node">${a.numberInSurah}</span>`;
+                });
+                textContainer.innerHTML = html;
+            } catch {
+                textContainer.innerHTML = 'حدث خطأ في التحميل.';
+            }
+        }
+
+        function closeSurah() {
+            document.getElementById('quranIndex').style.display = 'block';
+            document.getElementById('quranReader').style.display = 'none';
+        }
+
+        // 4. Audio Processing (Padding numbers for mp3quran.net)
+        const padZero = (num) => String(num).padStart(3, '0');
+
+        function loadAudioTafsirSurahCore() {
+            const reciterUrl = document.getElementById('reciterSelect').value;
+            const surahNum = document.getElementById('audioTafsirSurahSelect').value;
+            const audioPlayer = document.getElementById('quranAudioPlayer');
+            
+            // دمج رابط الشيخ مع رقم السورة بصيغة 001.mp3
+            audioPlayer.src = `${reciterUrl}${padZero(surahNum)}.mp3`;
+            audioPlayer.play().catch(e => console.log("Auto-play prevented"));
+        }
+
+        // 5. Virtues Database (10 Major Virtues)
+        const virtuesDB = [
+            { t: "الصلاة", d: "عماد الدين وأول ما يحاسب عليه العبد.", p: "قال ﷺ: «مَثَلُ الصَّلَوَاتِ الْخَمْسِ كَمَثَلِ نَهْرٍ جَارٍ...»" },
+            { t: "بر الوالدين", d: "أحب الأعمال إلى الله وسبب لدخول الجنة.", p: "قال ﷺ: «رضا الرب في رضا الوالد»." },
+            { t: "قراءة القرآن", d: "شفيع لأصحابه بكل حرف حسنة.", p: "قال ﷺ: «اقرءوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه»." },
+            { t: "الذكر والاستغفار", d: "يجلب الرزق ويفرج الهموم.", p: "قال ﷺ: «من لزم الاستغفار جعل الله له من كل ضيق مخرجاً»." },
+            { t: "قيام الليل", d: "شرف المؤمن ودأب الصالحين.", p: "قال ﷺ: «عليكم بقيام الليل فإنه دأب الصالحين قبلكم»." },
+            { t: "الصدقة", d: "تطفئ غضب الرب وتداوي المرضى.", p: "قال ﷺ: «والصدقة تطفئ الخطيئة كما يطفئ الماء النار»." },
+            { t: "الصيام", d: "جنة ووقاية من النار، لله يجزي به.", p: "قال ﷺ: «كل عمل ابن آدم له إلا الصيام فإنه لي وأنا أجزي به»." },
+            { t: "طلب العلم", d: "طريق سهل إلى الجنة.", p: "قال ﷺ: «من سلك طريقاً يلتمس فيه علماً سهل الله له به طريقاً إلى الجنة»." },
+            { t: "الكلمة الطيبة", d: "صدقة تجبر الخواطر وتؤلف القلوب.", p: "قال ﷺ: «الكلمة الطيبة صدقة»." },
+            { t: "صلة الرحم", d: "تزيد في العمر وتوسع الرزق.", p: "قال ﷺ: «من سره أن يبسط له في رزقه وأن ينسأ له في أثره فليصل رحمه»." }
+        ];
+
+        function searchVirtuesCore() {
+            const q = document.getElementById('virtueSearchInput').value;
+            const container = document.getElementById('virtuesDisplayContainer');
+            container.innerHTML = '';
+            
+            const results = q ? virtuesDB.filter(v => v.t.includes(q)) : virtuesDB;
+            results.forEach(v => {
+                container.innerHTML += `
+                    <div class="hadith-card-item">
+                        <h4><i class="fas fa-star"></i> فضل ${v.t}</h4>
+                        <p style="color:var(--text-muted); font-size:14px;">${v.d}</p>
+                        <div class="hadith-proof">${v.p}</div>
+                    </div>`;
+            });
+        }
+
+        // 6. Tasbeeh Logic
+        let count = 0;
+        function incrementTasbeeh() {
+            count++;
+            document.getElementById('tasbeehCounterBtn').innerText = count;
+            if(count % 33 === 0) {
+                const words = ["سُبْحَانَ اللَّهِ", "الْحَمْدُ لِلَّهِ", "اللَّهُ أَكْبَرُ", "لَا إِلَهَ إِلَّا اللَّهُ"];
+                document.getElementById('tasbeehDisplayWord').innerText = words[(count/33)%words.length];
+            }
+        }
+        function resetTasbeeh() {
+            count = 0;
+            document.getElementById('tasbeehCounterBtn').innerText = count;
+            document.getElementById('tasbeehDisplayWord').innerText = "سُبْحَانَ اللَّهِ";
+        }
+
+        // 7. Discord Webhook Suggestion System (The Secret Method)
+        function sendDiscordSuggestion() {
+            const text = document.getElementById('suggestionText').value;
+            if(!text.trim()) {
+                alert("يرجى كتابة الاقتراح أولاً!");
+                return;
+            }
+
+            // ضع الرابط الخاص بك هنا يا محمد بين علامتي التنصيص
+            const webhookUrl = "رابط_الـ_Webhook_الخاص_بك_هنا"; 
+
+            if(webhookUrl === "رابط_الـ_Webhook_الخاص_بك_هنا") {
+                alert("تنبيه برمجـي: يرجى وضع رابط الـ Webhook في الكود لكي تعمل الميزة.");
+                return;
+            }
+
+            // إرسال البيانات فوراً للديسكورد
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content: null,
+                    embeds: [{
+                        title: "💡 اقتراح جديد لمنصة رتيل",
+                        description: text,
+                        color: 1113098, // اللون الأخضر
+                        footer: { text: "مرسل من واجهة الموقع السريّة" },
+                        timestamp: new Date().toISOString()
+                    }]
+                })
+            }).then(() => {
+                alert("شكراً لك! تم إرسال اقتراحك للإدارة بنجاح وسرية تامة.");
+                document.getElementById('suggestionText').value = ""; // تصفير المربع
+                switchTab('dashboard'); // إرجاعه للرئيسية
+            }).catch(e => {
+                alert("حدث خطأ أثناء الاتصال بالسيرفر. تأكد من صحة الرابط.");
+                console.log(e);
+            });
+        }
+
+        // Initialize App
+        window.onload = () => {
+            detectUserLocationAndPrayers();
+            loadSurahList();
+            searchVirtuesCore(); // Load all virtues by default
+        };
+    </script>
+</body>
+</html>
